@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2) API", "2) API", "{D7968F66-AD2F-4F89-B7F1-ACE7F4522534}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX_AI_Buddy.ExtensionService", "VSIX_AI_Buddy.ExtensionService\VSIX_AI_Buddy.ExtensionService.csproj", "{3244F784-FF9A-4AE2-9B9F-E0322E9CDC80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX_AI_Buddy.AI_Buddy", "AI_Buddy\VSIX_AI_Buddy.AI_Buddy.csproj", "{02717569-4BCF-4DFD-A448-D575BF80E3A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scratch", "Scratch", "{BEE1E9F4-0316-4373-8784-6C9821F2CE5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOllama", "TestOllama\TestOllama.csproj", "{9523837C-94FE-4733-8BC9-1577CF91FC6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +65,18 @@ Global
 		{02717569-4BCF-4DFD-A448-D575BF80E3A7}.Release|arm64.Build.0 = Release|arm64
 		{02717569-4BCF-4DFD-A448-D575BF80E3A7}.Release|x86.ActiveCfg = Release|x86
 		{02717569-4BCF-4DFD-A448-D575BF80E3A7}.Release|x86.Build.0 = Release|x86
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Debug|arm64.Build.0 = Debug|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Debug|x86.Build.0 = Debug|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Release|arm64.ActiveCfg = Release|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Release|arm64.Build.0 = Release|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Release|x86.ActiveCfg = Release|Any CPU
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,5 +85,6 @@ Global
 		{4D904FF7-D198-43DD-9E0F-2DEBC50077A4} = {D7968F66-AD2F-4F89-B7F1-ACE7F4522534}
 		{3244F784-FF9A-4AE2-9B9F-E0322E9CDC80} = {13301993-ABD9-46A6-A8B1-E176498FF920}
 		{02717569-4BCF-4DFD-A448-D575BF80E3A7} = {C4E84840-F469-400F-AF4A-693AD0CA6737}
+		{9523837C-94FE-4733-8BC9-1577CF91FC6E} = {BEE1E9F4-0316-4373-8784-6C9821F2CE5C}
 	EndGlobalSection
 EndGlobal
