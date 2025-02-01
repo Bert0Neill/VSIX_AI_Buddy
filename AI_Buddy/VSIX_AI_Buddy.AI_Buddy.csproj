@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AI_BuddyPackage.vsct</DependentUpon>
     </Compile>
+    <Compile Include="Commands\HighlightedTextCommand.cs" />
     <Compile Include="Commands\MainMenuCmd.cs" />
     <Compile Include="Forms\VisualPrompt.cs">
       <SubType>Form</SubType>
@@ -94,6 +95,7 @@
       <ResourceName>Menus.ctmenu</ResourceName>
       <LastGenOutput>AI_BuddyPackage.cs</LastGenOutput>
     </VSCTCompile>
+    <Content Include="Commands\Resources\HighlightedTextCommand.png" />
     <Content Include="Commands\Resources\MainMenuCmd.png" />
     <Content Include="Images\229125_graph_line_icon.png" />
     <Content Include="Images\2799210_business_planing_graph_report_seo_icon.png" />

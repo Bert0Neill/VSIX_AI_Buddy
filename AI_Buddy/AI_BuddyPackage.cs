@@ -48,6 +48,7 @@ namespace AI_Buddy
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await AI_Buddy.Commands.MainMenuCmd.InitializeAsync(this);
+            await AI_Buddy.Commands.HighlightedTextCommand.InitializeAsync(this);
         }
 
         #endregion
