@@ -12,11 +12,11 @@ namespace AI_Buddy.Commands
     /// </summary>
     internal sealed partial class PackageGuids
     {
-        public const string guidAI_BuddyPackageString = "2f259d1a-ec99-4bc7-bc55-f1540b114913";
-        public static Guid guidAI_BuddyPackage = new Guid(guidAI_BuddyPackageString);
-
         public const string guidAI_BuddyPackageCmdSetString = "f3ae7c69-4f62-438d-a386-a11549044a8c";
         public static Guid guidAI_BuddyPackageCmdSet = new Guid(guidAI_BuddyPackageCmdSetString);
+
+        public const string guidAI_BuddyPackageString = "2f259d1a-ec99-4bc7-bc55-f1540b114913";
+        public static Guid guidAI_BuddyPackage = new Guid(guidAI_BuddyPackageString);
 
         public const string guidImagesString = "91ccd40d-b671-431c-9418-d67968904fb3";
         public static Guid guidImages = new Guid(guidImagesString);
@@ -29,10 +29,16 @@ namespace AI_Buddy.Commands
     /// </summary>
     internal sealed partial class PackageIds
     {
+        public const int PromptDeepMenu = 0x1023;
+        public const int PromptDeepSubmenuGroup = 0x1024;
+        public const int PromptDeepSubItem1 = 0x0103;
+        public const int PromptDeepSubItem2 = 0x0104;
         public const int ToolsMenuGroup = 0x1021;
         public const int EditorContextMenuGroup = 0x1022;
         public const int MainMenuCmdId = 0x0100;
         public const int cmdidHighlightedTextCommand = 0x0102;
+        public const int cmdidPromptDeepAnalyze = 0x0103;
+        public const int cmdidPromptDeepSuggest = 0x0104;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPicSearch = 0x0003;
