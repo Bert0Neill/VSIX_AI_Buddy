@@ -51,7 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AI_BuddyPackage.vsct</DependentUpon>
     </Compile>
-    <Compile Include="Commands\HighlightedTextCommand.cs" />
+    <Compile Include="Commands\HighlightedTextCmd.cs" />
     <Compile Include="Commands\MainMenuCmd.cs" />
     <Compile Include="Forms\VisualPrompt.cs">
       <SubType>Form</SubType>

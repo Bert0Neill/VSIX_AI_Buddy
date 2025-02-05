@@ -14,7 +14,7 @@ namespace AI_Buddy.Commands
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class HighlightedTextCommand
+    internal sealed class HighlightedTextCmd
     {
         /// <summary>
         /// Command ID.
@@ -34,12 +34,12 @@ namespace AI_Buddy.Commands
       
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HighlightedTextCommand"/> class.
+        /// Initializes a new instance of the <see cref="HighlightedTextCmd"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private HighlightedTextCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private HighlightedTextCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
             //this.package = package ?? throw new ArgumentNullException(nameof(package));
             //commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -59,7 +59,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static HighlightedTextCommand Instance
+        public static HighlightedTextCmd Instance
         {
             get;
             private set;
@@ -93,7 +93,7 @@ namespace AI_Buddy.Commands
             var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
-                new HighlightedTextCommand(package, commandService);
+                new HighlightedTextCmd(package, commandService);
             }
         }
 
