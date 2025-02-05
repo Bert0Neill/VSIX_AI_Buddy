@@ -17,12 +17,6 @@ namespace AI_Buddy.Commands
 
         public const string guidAI_BuddyPackageString = "2f259d1a-ec99-4bc7-bc55-f1540b114913";
         public static Guid guidAI_BuddyPackage = new Guid(guidAI_BuddyPackageString);
-
-        public const string guidImagesString = "91ccd40d-b671-431c-9418-d67968904fb3";
-        public static Guid guidImages = new Guid(guidImagesString);
-
-        public const string guidImages1String = "9fd8af83-a0da-41ca-aea1-0479aaa141e7";
-        public static Guid guidImages1 = new Guid(guidImages1String);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -32,24 +26,11 @@ namespace AI_Buddy.Commands
         public const int PromptDeepMenu = 0x1023;
         public const int PromptDeepSubmenuGroup = 0x1024;
         public const int PromptDeepSubItem1 = 0x0103;
-        public const int PromptDeepSubItem2 = 0x0104;
         public const int ToolsMenuGroup = 0x1021;
         public const int EditorContextMenuGroup = 0x1022;
         public const int MainMenuCmdId = 0x0100;
-        public const int cmdidHighlightedTextCommand = 0x0102;
+        public const int PromptDeepSubItem2 = 0x0102;
         public const int cmdidPromptDeepAnalyze = 0x0103;
         public const int cmdidPromptDeepSuggest = 0x0104;
-        public const int bmpPic1 = 0x0001;
-        public const int bmpPic2 = 0x0002;
-        public const int bmpPicSearch = 0x0003;
-        public const int bmpPicX = 0x0004;
-        public const int bmpPicArrows = 0x0005;
-        public const int bmpPicStrikethrough = 0x0006;
-        public const int bmpPic1_Alt = 0x0001;
-        public const int bmpPic2_Alt = 0x0002;
-        public const int bmpPicSearch_Alt = 0x0003;
-        public const int bmpPicX_Alt = 0x0004;
-        public const int bmpPicArrows_Alt = 0x0005;
-        public const int bmpPicStrikethrough_Alt = 0x0006;
     }
 }

@@ -29,8 +29,9 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly Microsoft.VisualStudio.Shell.Package package;
         private readonly AsyncPackage _package;
+      
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HighlightedTextCommand"/> class.
@@ -71,7 +72,7 @@ namespace AI_Buddy.Commands
         {
             get
             {
-                return this.package;
+                return this._package;
             }
         }
 
@@ -96,38 +97,23 @@ namespace AI_Buddy.Commands
             }
         }
 
-        /// <summary>
-        /// This function is the callback used to execute the command when the menu item is clicked.
-        /// See the constructor to see how the menu item is associated with this function using
-        /// OleMenuCommandService service and MenuCommand class.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
-        //private void Execute(object sender, EventArgs e)
-        //{
-        //    //    ThreadHelper.ThrowIfNotOnUIThread();
-        //    //    string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-        //    //    string title = "HighlightedTextCommand";
 
-        //    //    // Show a message box to prove we were here
-        //    //    VsShellUtilities.ShowMessageBox(
-        //    //        this.package,
-        //    //        message,
-        //    //        title,
-        //    //        OLEMSGICON.OLEMSGICON_INFO,
-        //    //        OLEMSGBUTTON.OLEMSGBUTTON_OK,
-        //    //        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-        //    ThreadHelper.ThrowIfNotOnUIThread();
-        //    var text = GetSelectedText();
-        //    if (!string.IsNullOrEmpty(text))
-        //    {
-        //        System.Windows.Forms.MessageBox.Show($"Selected Text: {text}", "VSIX Command");
-        //    }
-        //}
 
         private async void Execute(object sender, EventArgs e)
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
+            string title = "HighlightedTextCommand";
+            // Show a message box to prove we were here
+            VsShellUtilities.ShowMessageBox(
+                    this._package,
+                    message,
+                    title,
+                    OLEMSGICON.OLEMSGICON_INFO,
+                    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
             string text = await GetSelectedTextAsync();
             if (!string.IsNullOrEmpty(text))
             {
