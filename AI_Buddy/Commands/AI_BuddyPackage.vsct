@@ -1,89 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<Extern href="stdidcmd.h" />
-	<Extern href="vsshlids.h" />
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
 
-	<Commands package="guidAI_BuddyPackage">
-		<!-- Add Groups -->
-		<Groups>
-			<!-- Existing groups -->
-			<Group guid="guidAI_BuddyPackageCmdSet" id="ToolsMenuGroup" priority="0x0600">
-				<Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
-			</Group>
+  <Commands package="guidAI_BuddyPackage">
+    <!-- Add Groups -->
+    <Groups>
+      <!-- Existing groups -->
+      <Group guid="guidAI_BuddyPackageCmdSet" id="EditorMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
 
-			<!-- New group for submenu items -->
-			<Group guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubmenuGroup" priority="0x0600">
-				<Parent guid="guidAI_BuddyPackageCmdSet" id="PromptDeepMenu" />
-			</Group>
-		</Groups>
+      <!-- New group for submenu items -->
+      <Group guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" priority="0x0600">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptMenu" />
+      </Group>
+    </Groups>
 
-		<!-- Add Menu and Buttons -->
-		<Menus>
-			<!-- Main "Prompt Deep" menu -->
-			<Menu guid="guidAI_BuddyPackageCmdSet" id="PromptDeepMenu" priority="0x0100" type="Menu">
-				<Parent guid="guidAI_BuddyPackageCmdSet" id="ToolsMenuGroup" />
-				<Strings>
-					<ButtonText>Prompt Deep</ButtonText>
-				</Strings>
-			</Menu>
-		</Menus>
+    <!-- Add Menu and Buttons -->
+    <Menus>
+      <!-- Main Ext. menu -->
+      <Menu guid="guidAI_BuddyPackageCmdSet" id="AIPromptMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="EditorMenuGroup" />
+        <Strings>
+          <ButtonText>Your AI Buddy</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
 
-		<Buttons>
-			
-				<!-- Keep existing buttons -->
-			<!--<Button guid="guidAI_BuddyPackageCmdSet" id="MainMenuCmdId" priority="0x0100" type="Button">
-				<Parent guid="guidAI_BuddyPackageCmdSet" id="ToolsMenuGroup" />
-				<Icon guid="guidImages" id="bmpPic1" />
-				<Strings>
-					<ButtonText>Prompt DeepSeek</ButtonText>
-				</Strings>
-			</Button>-->
-			
-			<!-- Submenu item under "Prompt Deep" -->
-			<Button guid="guidAI_BuddyPackageCmdSet" id="MainMenuCmdId" priority="0x0100" type="Button">
-				<Parent guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubmenuGroup" />
-				<Strings>
-					<ButtonText>DeepSeek Action 1</ButtonText>
-				</Strings>
-			</Button>
+    <Buttons>
+      <!-- Submenu item -->
+      <!--AI URL-->
+      <!--AI Key-->
+      <!--Default programming language-->
+      <!--Default testing framework-->
+      <Button guid="guidAI_BuddyPackageCmdSet" id="AISettingsCmdId" priority="0x0100" type="Button">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+        <Strings>
+          <ButtonText>Configure AI Provider Settings</ButtonText>
+        </Strings>
+      </Button>
 
-		
-		
-				<!-- Submenu item under "Prompt Deep" -->
-			<Button guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubItem2" priority="0x0101" type="Button">
-				<Parent guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubmenuGroup" />
-				<Strings>
-					<ButtonText>DeepSeek Action 2</ButtonText>
-				</Strings>
-			</Button>
-		
-		</Buttons>
+      <!-- Submenu item -->
+      <Button guid="guidAI_BuddyPackageCmdSet" id="GenerateTestCmdId" priority="0x0102" type="Button">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+        <Strings>
+          <ButtonText>Generate MS Test</ButtonText>
+        </Strings>
+      </Button>
 
-		<!-- Rest of your existing elements -->
-	</Commands>
+      <!--<Button guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubItem2" priority="0x0103" type="Button">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+        <Strings>
+          <ButtonText>Comment Code</ButtonText>
+        </Strings>
+      </Button>
 
-	<Symbols>
-		<!-- Add new symbols -->
-		<GuidSymbol name="guidAI_BuddyPackageCmdSet" value="{f3ae7c69-4f62-438d-a386-a11549044a8c}">
-			<!-- Existing symbols -->
-			<IDSymbol name="PromptDeepMenu" value="0x1023" />
-			<IDSymbol name="PromptDeepSubmenuGroup" value="0x1024" />
-			<IDSymbol name="PromptDeepSubItem1" value="0x0103" />
-			
+      <Button guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubItem2" priority="0x0101" type="Button">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+        <Strings>
+          <ButtonText>Suggest Improvements</ButtonText>
+        </Strings>
+      </Button>
 
-			<IDSymbol name="ToolsMenuGroup" value="0x1021" />
-			<IDSymbol name="EditorContextMenuGroup" value="0x1022" />
-			<IDSymbol name="MainMenuCmdId" value="0x0100" />
-			<IDSymbol name="PromptDeepSubItem2" value="0x0102" />
-			<!--<IDSymbol name="cmdidHighlightedTextCommand" value="0x0102" />-->
+      <Button guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubItem2" priority="0x0104" type="Button">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+        <Strings>
+          <ButtonText>Generate Code From Selected Text</ButtonText>
+        </Strings>
+      </Button>
 
-			<IDSymbol name="cmdidPromptDeepAnalyze" value="0x0103" />
-			<IDSymbol name="cmdidPromptDeepSuggest" value="0x0104" />
-		</GuidSymbol>
+      <Button guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubItem2" priority="0x0105" type="Button">
+        <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+        <Strings>
+          <ButtonText>Display Prompt</ButtonText>
+        </Strings>
+      </Button>-->
 
-		<GuidSymbol name="guidAI_BuddyPackage" value="{2f259d1a-ec99-4bc7-bc55-f1540b114913}" />
+    </Buttons>
 
-		<!--<GuidSymbol name="guidImages" value="{f3ae7c69-4f62-438d-a386-a11549044a8c}">
+    <!-- Rest of your existing elements -->
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidAI_BuddyPackageCmdSet" value="{f3ae7c69-4f62-438d-a386-a11549044a8c}">
+      <IDSymbol name="AIPromptMenu" value="0x1023" />
+      <IDSymbol name="AIPromptSubMenuGroup" value="0x1024" />
+      <IDSymbol name="EditorMenuGroup" value="0x1021" />
+      <IDSymbol name="AISettingsCmdId" value="0x0100" />
+      <IDSymbol name="GenerateTestCmdId" value="0x0102" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidAI_BuddyPackage" value="{2f259d1a-ec99-4bc7-bc55-f1540b114913}" />
+
+    <!--<GuidSymbol name="guidImages" value="{f3ae7c69-4f62-438d-a386-a11549044a8c}">
 			<IDSymbol name="bmpPic1" value="1" />
 			<IDSymbol name="bmpPic2" value="2" />
 			<IDSymbol name="bmpPicSearch" value="3" />
@@ -92,7 +102,7 @@
 			<IDSymbol name="bmpPicStrikethrough" value="6" />
 		</GuidSymbol>-->
 
-		<!--<GuidSymbol value="{9fd8af83-a0da-41ca-aea1-0479aaa141e7}" name="guidImages1">
+    <!--<GuidSymbol value="{9fd8af83-a0da-41ca-aea1-0479aaa141e7}" name="guidImages1">
 			<IDSymbol name="bmpPic1_Alt" value="1" />
 			<IDSymbol name="bmpPic2_Alt" value="2" />
 			<IDSymbol name="bmpPicSearch_Alt" value="3" />
@@ -101,83 +111,11 @@
 			<IDSymbol name="bmpPicStrikethrough_Alt" value="6" />
 		</GuidSymbol>-->
 
-		<!-- Keep existing GUID symbols -->
-	</Symbols>
+    <!-- Keep existing GUID symbols -->
+  </Symbols>
 </CommandTable>
 
-<!--<?xml version="1.0" encoding="utf-8"?>
-<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
-  
-
-  <Extern href="stdidcmd.h" />
-
-  <Extern href="vsshlids.h" />
-
-  <Commands package="guidAI_BuddyPackage">
-    
-
-	  <Groups>
-		  <Group guid="guidAI_BuddyPackageCmdSet" id="ToolsMenuGroup" priority="0x0600">
-			  <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
-		  </Group>
-
-		  <Group guid="guidAI_BuddyPackageCmdSet" id="EditorContextMenuGroup" priority="0x0600">
-			  <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
-		  </Group>
-	  
-	  <Group guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubmenuGroup" priority="0x0610">
-    <Parent guid="guidAI_BuddyPackageCmdSet" id="MainMenuCmdId" />
-</Group>
-
-	  </Groups>
-
-	  <Menus>
-		  <Menu guid="guidAI_BuddyPackageCmdSet" id="MainMenuCmdId" priority="0x0100" type="Menu">
-			  <Parent guid="guidAI_BuddyPackageCmdSet" id="ToolsMenuGroup" />
-			  <Icon guid="guidImages" id="bmpPic1" />
-			  <Strings>
-				  <ButtonText>Prompt DeepSeek</ButtonText>
-			  </Strings>
-		  </Menu>
-	  </Menus>
-	
-
-	  <Buttons>
-	  <Button guid="guidAI_BuddyPackageCmdSet" id="MainMenuCmdId" priority="0x0100" type="Button">
-		  <Parent guid="guidAI_BuddyPackageCmdSet" id="ToolsMenuGroup" />
-		  <Icon guid="guidImages" id="bmpPic1" />
-		  <Strings>
-			  <ButtonText>Prompt DeepSeek</ButtonText>
-		  </Strings>
-	  </Button>
-
-	  <Button guid="guidAI_BuddyPackageCmdSet" id="cmdidHighlightedTextCommand" priority="0x0100" type="Button">
-		  <Parent guid="guidAI_BuddyPackageCmdSet" id="EditorContextMenuGroup" />
-		  <Icon guid="guidImages1" id="bmpPic1_Alt" />
-		  <Strings>
-			  <ButtonText>Generate MS Unit Test</ButtonText>
-		  </Strings>
-	  </Button>
-
-		  <Button guid="guidAI_BuddyPackageCmdSet" id="cmdidPromptDeepAnalyze" priority="0x0110" type="Button">
-			  <Parent guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubmenuGroup" />
-			  <Icon guid="guidImages" id="bmpPic2" />
-			  <Strings>
-				  <ButtonText>Analyze Code</ButtonText>
-			  </Strings>
-		  </Button>
-
-		  <Button guid="guidAI_BuddyPackageCmdSet" id="cmdidPromptDeepSuggest" priority="0x0120" type="Button">
-			  <Parent guid="guidAI_BuddyPackageCmdSet" id="PromptDeepSubmenuGroup" />
-			  <Icon guid="guidImages" id="bmpPicSearch" />
-			  <Strings>
-				  <ButtonText>Suggest Improvements</ButtonText>
-			  </Strings>
-		  </Button>
-
-	  
-		  </Buttons>
+<!--
 
     <Bitmaps>
     
@@ -196,7 +134,7 @@
 		  <IDSymbol name="MainMenuCmdId" value="0x0100" />
 		  <IDSymbol name="cmdidHighlightedTextCommand" value="0x0102" />
 	  
-	  <IDSymbol name="PromptDeepSubmenuGroup" value="0x1023" />
+	  <IDSymbol name="AIPromptSubMenuGroup" value="0x1023" />
 <IDSymbol name="cmdidPromptDeepAnalyze" value="0x0103" />
 <IDSymbol name="cmdidPromptDeepSuggest" value="0x0104" />
 
