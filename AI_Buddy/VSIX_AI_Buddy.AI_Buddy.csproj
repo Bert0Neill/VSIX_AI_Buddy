@@ -51,8 +51,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AI_BuddyPackage.vsct</DependentUpon>
     </Compile>
+    <Compile Include="Commands\DisplayPromptCmd.cs" />
+    <Compile Include="Commands\GenerateCodeFromHintCmd.cs" />
+    <Compile Include="Commands\GenerateCommentsCmd.cs" />
+    <Compile Include="Commands\GenerateUnitTestCmd.cs" />
     <Compile Include="Commands\HighlightedTextCmd.cs" />
-    <Compile Include="Commands\MainMenuCmd.cs" />
+    <Compile Include="Commands\PropertiesCmd.cs" />
+    <Compile Include="Commands\SuggestImprovementsCmd.cs" />
     <Compile Include="Forms\VisualPrompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,8 +100,15 @@
       <ResourceName>Menus.ctmenu</ResourceName>
       <LastGenOutput>AI_BuddyPackage.cs</LastGenOutput>
     </VSCTCompile>
+    <Content Include="Commands\Resources\Custom-Icon-Design-Pretty-Office-9-Comment-edit.16.png" />
+    <Content Include="Commands\Resources\DisplayPromptCmd.png" />
+    <Content Include="Commands\Resources\GenerateCodeFromTextCmd.png" />
+    <Content Include="Commands\Resources\GenerateCommentsCmd.png" />
+    <Content Include="Commands\Resources\GenerateUnitTestCmd.png" />
     <Content Include="Commands\Resources\HighlightedTextCommand.png" />
     <Content Include="Commands\Resources\MainMenuCmd.png" />
+    <Content Include="Commands\Resources\Rafiqul-Hassan-Blogger-Settings-2.16.png" />
+    <Content Include="Commands\Resources\SuggestImprovementsCmd.png" />
     <Content Include="Images\229125_graph_line_icon.png" />
     <Content Include="Images\2799210_business_planing_graph_report_seo_icon.png" />
     <Content Include="Images\285657_floppy_guardar_save_icon %281%29.png" />

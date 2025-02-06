@@ -17,20 +17,51 @@ namespace AI_Buddy.Commands
 
         public const string guidAI_BuddyPackageString = "2f259d1a-ec99-4bc7-bc55-f1540b114913";
         public static Guid guidAI_BuddyPackage = new Guid(guidAI_BuddyPackageString);
+
+        public const string guidImagesSettingsString = "91ccd40d-b671-431c-9418-d67968904fb3";
+        public static Guid guidImagesSettings = new Guid(guidImagesSettingsString);
+
+        public const string guidImagesTestString = "9fd8af83-a0da-41ca-aea1-0479aaa141e7";
+        public static Guid guidImagesTest = new Guid(guidImagesTestString);
+
+        public const string guidImagesCommentString = "a3c807a5-7cf3-4a1e-87d2-8b8d2a1b5c9d";
+        public static Guid guidImagesComment = new Guid(guidImagesCommentString);
+
+        public const string guidImagesImproveString = "b4e9e6a2-7c9f-4d8e-9e3a-1f8a7d3e5b2c";
+        public static Guid guidImagesImprove = new Guid(guidImagesImproveString);
+
+        public const string guidImagesCodeGenString = "c5d8e7f3-9a1b-4e6c-8d2a-3f4e5b6c7d8e";
+        public static Guid guidImagesCodeGen = new Guid(guidImagesCodeGenString);
+
+        public const string guidImagesPromptString = "d6e7f8a9-0b1c-4d2e-8f3a-5b6c7d8e9f0a";
+        public static Guid guidImagesPrompt = new Guid(guidImagesPromptString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
     /// </summary>
     internal sealed partial class PackageIds
     {
-        public const int PromptDeepMenu = 0x1023;
-        public const int PromptDeepSubmenuGroup = 0x1024;
-        public const int PromptDeepSubItem1 = 0x0103;
-        public const int ToolsMenuGroup = 0x1021;
-        public const int EditorContextMenuGroup = 0x1022;
-        public const int MainMenuCmdId = 0x0100;
-        public const int PromptDeepSubItem2 = 0x0102;
-        public const int cmdidPromptDeepAnalyze = 0x0103;
-        public const int cmdidPromptDeepSuggest = 0x0104;
+        public const int AIPromptMenu = 0x1023;
+        public const int AIPromptSubMenuGroup = 0x1024;
+        public const int EditorMenuGroup = 0x1021;
+        public const int AISettingsCmdId = 0x0100;
+        public const int GenerateTestCmdId = 0x0102;
+        public const int cmdidGenerateUnitTestCmd = 0x1025;
+        public const int cmdidGenerateCommentsCmd = 0x1026;
+        public const int cmdidSuggestImprovementsCmd = 0x1027;
+        public const int cmdidGenerateCodeFromTextCmd = 0x1028;
+        public const int cmdidDisplayPromptCmd = 0x1029;
+        public const int bmpPic1 = 0x0001;
+        public const int bmpPic2 = 0x0002;
+        public const int bmpPicSearch = 0x0003;
+        public const int bmpPicX = 0x0004;
+        public const int bmpPicArrows = 0x0005;
+        public const int bmpPicStrikethrough = 0x0006;
+        public const int bmpPicSettings = 0x0001;
+        public const int bmpPicTest = 0x0001;
+        public const int bmpPicComment = 0x0001;
+        public const int bmpPicImprove = 0x0001;
+        public const int bmpPicCodeGen = 0x0001;
+        public const int bmpPicPrompt = 0x0001;
     }
 }

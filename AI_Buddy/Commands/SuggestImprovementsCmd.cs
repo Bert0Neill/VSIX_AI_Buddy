@@ -1,12 +1,10 @@
-﻿using AI_Buddy.Forms;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
 
 namespace AI_Buddy.Commands
@@ -14,12 +12,12 @@ namespace AI_Buddy.Commands
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class MainMenuCmd
+    internal sealed class SuggestImprovementsCmd
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int CommandId = 4135;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -32,12 +30,12 @@ namespace AI_Buddy.Commands
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainMenuCmd"/> class.
+        /// Initializes a new instance of the <see cref="SuggestImprovementsCmd"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private MainMenuCmd(AsyncPackage package, OleMenuCommandService commandService)
+        private SuggestImprovementsCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -50,7 +48,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static MainMenuCmd Instance
+        public static SuggestImprovementsCmd Instance
         {
             get;
             private set;
@@ -73,12 +71,12 @@ namespace AI_Buddy.Commands
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in MainMenuCmd's constructor requires
+            // Switch to the main thread - the call to AddCommand in SuggestImprovementsCmd's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new MainMenuCmd(package, commandService);
+            Instance = new SuggestImprovementsCmd(package, commandService);
         }
 
         /// <summary>
@@ -92,20 +90,16 @@ namespace AI_Buddy.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "MainMenuCmd";
+            string title = "SuggestImprovementsCmd";
 
-            //    // Show a message box to prove we were here
-            //    VsShellUtilities.ShowMessageBox(
-            //        this.package,
-            //        message,
-            //        title,
-            //        OLEMSGICON.OLEMSGICON_INFO,
-            //        OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            //        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-            // Show WinForms form with selected text
-            var form = new VisualPrompt();
-            form.ShowDialog();
+            // Show a message box to prove we were here
+            VsShellUtilities.ShowMessageBox(
+                this.package,
+                message,
+                title,
+                OLEMSGICON.OLEMSGICON_INFO,
+                OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
         }
     }
 }
