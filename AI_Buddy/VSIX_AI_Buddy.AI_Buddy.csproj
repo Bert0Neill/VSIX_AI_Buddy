@@ -102,13 +102,23 @@
     </VSCTCompile>
     <Content Include="Commands\Resources\Custom-Icon-Design-Pretty-Office-9-Comment-edit.16.png" />
     <Content Include="Commands\Resources\DisplayPromptCmd.png" />
+    <Content Include="Commands\Resources\Double-J-Design-Origami-Colored-Pencil-Blue-document.16.png" />
+    <Content Include="Commands\Resources\Double-J-Design-Ravenna-3d-Comments.16.png" />
+    <Content Include="Commands\Resources\Social-balloon-friends.16.png" />
+    <Content Include="Commands\Resources\Dtafalonso-Modern-Xp-ModernXP-30-Filetype-Text.16.png" />
+    <Content Include="Commands\Resources\Gartoon-Team-Gartoon-Categories-Applications-science.16.png" />
+    <Content Include="Commands\Resources\Gartoon-Team-Gartoon-Categories-Preferences-autocompletion.16.png" />
     <Content Include="Commands\Resources\GenerateCodeFromTextCmd.png" />
     <Content Include="Commands\Resources\GenerateCommentsCmd.png" />
     <Content Include="Commands\Resources\GenerateUnitTestCmd.png" />
     <Content Include="Commands\Resources\HighlightedTextCommand.png" />
+    <Content Include="Commands\Resources\Icons8-Ios7-Science-Test-Tube.16.png" />
+    <Content Include="Commands\Resources\Kyo-Tux-Soft-Chat.16.png" />
     <Content Include="Commands\Resources\MainMenuCmd.png" />
     <Content Include="Commands\Resources\Rafiqul-Hassan-Blogger-Settings-2.16.png" />
+    <Content Include="Commands\Resources\Resources\DummyMenuCmd.png" />
     <Content Include="Commands\Resources\SuggestImprovementsCmd.png" />
+    <Content Include="Commands\Resources\Thalita-Torres-Office-Documents.16.png" />
     <Content Include="Images\229125_graph_line_icon.png" />
     <Content Include="Images\2799210_business_planing_graph_report_seo_icon.png" />
     <Content Include="Images\285657_floppy_guardar_save_icon %281%29.png" />
