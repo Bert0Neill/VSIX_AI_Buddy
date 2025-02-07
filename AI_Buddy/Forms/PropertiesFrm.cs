@@ -1,15 +1,7 @@
 ﻿using AI_Buddy.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AI_Buddy.Forms
@@ -52,31 +44,18 @@ namespace AI_Buddy.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-                string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
-
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath);
-            }
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
             SaveToJson(_aiProperties, filePath);
+
+            MessageBox.Show("File has been saved successfully.", "Save Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
 
         public void SaveToJson<T>(T obj, string filePath)
         {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);  // Delete the file if it exists
-            }
-
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-                writer.Write(json);
-            }
-
-            //string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-            //File.WriteAllText(filePath, json);
+            string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            File.WriteAllText(filePath, json);
         }
 
         public T LoadFromJson<T>(string filePath)
@@ -85,7 +64,6 @@ namespace AI_Buddy.Forms
             string json = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<T>(json);
         }
-
 
     }
 }

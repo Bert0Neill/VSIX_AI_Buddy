@@ -47,9 +47,9 @@ namespace AI_Buddy.Models
         public DateTime DateLastModified { get; set; } = DateTime.Now;
 
         [Category("General Info")]
-        [DisplayName("Last 10 prompts")]
-        [Description("The last 10 prompts you made.")]
-        public List<string> LastTenPrompts { get; set; }
+        [DisplayName("Last Prompt")]
+        [Description("The last prompt you made.")]
+        public string LastPrompt { get; set; }
 
         [Category("General Info")]
         [DisplayName("Settings Filename")]

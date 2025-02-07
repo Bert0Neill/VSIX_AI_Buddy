@@ -36,16 +36,18 @@
             // 
             // propertiesAIPrompt
             // 
-            this.propertiesAIPrompt.Location = new System.Drawing.Point(6, 12);
+            this.propertiesAIPrompt.Location = new System.Drawing.Point(4, 10);
+            this.propertiesAIPrompt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.propertiesAIPrompt.Name = "propertiesAIPrompt";
-            this.propertiesAIPrompt.Size = new System.Drawing.Size(456, 397);
+            this.propertiesAIPrompt.Size = new System.Drawing.Size(342, 323);
             this.propertiesAIPrompt.TabIndex = 0;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(247, 415);
+            this.btnCancel.Location = new System.Drawing.Point(185, 337);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(215, 23);
+            this.btnCancel.Size = new System.Drawing.Size(161, 19);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -53,10 +55,10 @@
             // 
             // btnSave
             // 
-            this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(12, 415);
+            this.btnSave.Location = new System.Drawing.Point(9, 337);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(215, 23);
+            this.btnSave.Size = new System.Drawing.Size(161, 19);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -64,13 +66,14 @@
             // 
             // PropertiesFrm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 450);
+            this.ClientSize = new System.Drawing.Size(350, 366);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.propertiesAIPrompt);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PropertiesFrm";
