@@ -22,17 +22,5 @@ namespace AI_Buddy.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("AI_Buddy_Settings.json")]
-        public string SettingsFilename {
-            get {
-                return ((string)(this["SettingsFilename"]));
-            }
-            set {
-                this["SettingsFilename"] = value;
-            }
-        }
     }
 }

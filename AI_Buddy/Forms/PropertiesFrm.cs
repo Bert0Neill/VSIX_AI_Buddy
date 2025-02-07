@@ -1,22 +1,13 @@
 ﻿using AI_Buddy.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AI_Buddy.Forms
 {
     public partial class PropertiesFrm : Form
     {
-        string _defaultFilename = string.Empty;
         AIProperties _aiProperties = new AIProperties();
 
         public PropertiesFrm()
@@ -24,7 +15,6 @@ namespace AI_Buddy.Forms
             InitializeComponent();
 
             propertiesAIPrompt.PropertyValueChanged += PropertiesAIPrompt_PropertyValueChanged;
-            _defaultFilename = Properties.Settings.Default.SettingsFilename;
         }
 
         private void PropertiesAIPrompt_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -35,7 +25,7 @@ namespace AI_Buddy.Forms
         private void PropertiesFrm_Load(object sender, EventArgs e)
         {
             // read file settings and populate settings class, if no file display defaults
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
 
             if (File.Exists(filePath))
             {
@@ -52,7 +42,7 @@ namespace AI_Buddy.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-                string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
 
             if (!File.Exists(filePath))
             {
@@ -74,9 +64,6 @@ namespace AI_Buddy.Forms
                 string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
                 writer.Write(json);
             }
-
-            //string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-            //File.WriteAllText(filePath, json);
         }
 
         public T LoadFromJson<T>(string filePath)
@@ -85,7 +72,5 @@ namespace AI_Buddy.Forms
             string json = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<T>(json);
         }
-
-
     }
 }

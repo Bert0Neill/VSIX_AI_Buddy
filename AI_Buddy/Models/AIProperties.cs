@@ -53,7 +53,7 @@ namespace AI_Buddy.Models
 
         [Category("General Info")]
         [DisplayName("Settings Filename")]
-        [Description("The location where these settings are saved to (readonly).")]
+        [Description("The file where these settings are saved to (readonly).")]
         [ReadOnly(true)]
         public string SettingsFilename { get; set; } = "AI_Buddy_Settings.json";
 
