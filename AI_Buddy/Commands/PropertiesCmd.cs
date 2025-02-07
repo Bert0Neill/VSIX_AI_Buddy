@@ -104,8 +104,8 @@ namespace AI_Buddy.Commands
             //        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
             // Show WinForms form with selected text
-            var form = new VisualPrompt();
-            form.ShowDialog();
+            var propertiesForm = new PropertiesFrm();
+            propertiesForm.ShowDialog();
         }
     }
 }

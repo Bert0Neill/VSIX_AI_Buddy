@@ -1,0 +1,91 @@
+﻿using AI_Buddy.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace AI_Buddy.Forms
+{
+    public partial class PropertiesFrm : Form
+    {
+        string _defaultFilename = string.Empty;
+        AIProperties _aiProperties = new AIProperties();
+
+        public PropertiesFrm()
+        {
+            InitializeComponent();
+
+            propertiesAIPrompt.PropertyValueChanged += PropertiesAIPrompt_PropertyValueChanged;
+            _defaultFilename = Properties.Settings.Default.SettingsFilename;
+        }
+
+        private void PropertiesAIPrompt_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            btnSave.Enabled = true; // Enable the button when a property is modified
+        }
+
+        private void PropertiesFrm_Load(object sender, EventArgs e)
+        {
+            // read file settings and populate settings class, if no file display defaults
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
+
+            if (File.Exists(filePath))
+            {
+                _aiProperties = LoadFromJson<AIProperties>(filePath);
+            }
+            
+            this.propertiesAIPrompt.SelectedObject = _aiProperties;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
+
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+            }
+            SaveToJson(_aiProperties, filePath);
+        }
+
+
+        public void SaveToJson<T>(T obj, string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);  // Delete the file if it exists
+            }
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+                writer.Write(json);
+            }
+
+            //string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            //File.WriteAllText(filePath, json);
+        }
+
+        public T LoadFromJson<T>(string filePath)
+        {
+            if (!File.Exists(filePath)) return default;
+            string json = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+
+    }
+}
