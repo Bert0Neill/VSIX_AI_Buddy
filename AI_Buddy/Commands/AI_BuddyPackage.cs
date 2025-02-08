@@ -38,6 +38,9 @@ namespace AI_Buddy.Commands
 
         public const string guidAIImagesString = "cccfebe1-cea8-4ad4-880f-e87580db2bee";
         public static Guid guidAIImages = new Guid(guidAIImagesString);
+
+        public const string guidImagesString = "71f44574-1df5-40ae-b6b6-c9b507db1837";
+        public static Guid guidImages = new Guid(guidImagesString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -54,6 +57,7 @@ namespace AI_Buddy.Commands
         public const int cmdidSuggestImprovementsCmd = 0x1027;
         public const int cmdidGenerateCodeFromTextCmd = 0x1028;
         public const int cmdidDisplayPromptCmd = 0x1029;
+        public const int cmdidToolWindow1Command = 0x102A;
         public const int bmpPicSettings = 0x0001;
         public const int bmpPicTest = 0x0001;
         public const int bmpPicComment = 0x0001;
@@ -61,5 +65,11 @@ namespace AI_Buddy.Commands
         public const int bmpPicCodeGen = 0x0001;
         public const int bmpPicPrompt = 0x0001;
         public const int bmpPicAIPrompt = 0x0001;
+        public const int bmpPic1 = 0x0001;
+        public const int bmpPic2 = 0x0002;
+        public const int bmpPicSearch = 0x0003;
+        public const int bmpPicX = 0x0004;
+        public const int bmpPicArrows = 0x0005;
+        public const int bmpPicStrikethrough = 0x0006;
     }
 }

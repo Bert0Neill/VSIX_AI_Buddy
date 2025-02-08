@@ -27,7 +27,7 @@ namespace AI_Buddy
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(AI_BuddyPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(PromptPanel), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right)]
+    [ProvideToolWindow(typeof(AI_Buddy.Components.PromptWindow))]
     public sealed class AI_BuddyPackage : AsyncPackage
     {
         /// <summary>
