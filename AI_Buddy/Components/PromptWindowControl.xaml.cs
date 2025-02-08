@@ -7,12 +7,12 @@ namespace AI_Buddy.Components
     /// <summary>
     /// Interaction logic for ToolWindow1Control.
     /// </summary>
-    public partial class ToolWindow1Control : UserControl
+    public partial class PromptWindowControl : UserControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToolWindow1Control"/> class.
+        /// Initializes a new instance of the <see cref="PromptWindowControl"/> class.
         /// </summary>
-        public ToolWindow1Control()
+        public PromptWindowControl()
         {
             this.InitializeComponent();
         }
@@ -29,6 +29,13 @@ namespace AI_Buddy.Components
             MessageBox.Show(
                 string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
                 "ToolWindow1");
+        }
+
+        private void mySearchBox_QuerySubmitted(SearchBox sender,
+         SearchBoxQuerySubmittedEventArgs args)
+        {
+
+            this.Frame.Navigate(typeof(SearchResultsPage1), args.QueryText);
         }
     }
 }
