@@ -42,11 +42,11 @@ namespace AI_Buddy.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), _defaultFilename);
+            _aiProperties.DateLastModified = DateTime.Now;
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
             SaveToJson(_aiProperties, filePath);
 
             MessageBox.Show("File has been saved successfully.", "Save Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
 
