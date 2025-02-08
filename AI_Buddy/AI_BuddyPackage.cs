@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using AI_Buddy.Components;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -26,6 +27,7 @@ namespace AI_Buddy
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(AI_BuddyPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideToolWindow(typeof(PromptPanel), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right)]
     public sealed class AI_BuddyPackage : AsyncPackage
     {
         /// <summary>
@@ -42,6 +44,7 @@ namespace AI_Buddy
         /// <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
         /// <param name="progress">A provider for progress updates.</param>
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
+        
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             // When initialized asynchronously, the current thread may be a background thread at this point.

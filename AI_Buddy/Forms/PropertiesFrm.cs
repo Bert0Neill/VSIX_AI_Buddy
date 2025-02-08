@@ -1,5 +1,5 @@
 ﻿using AI_Buddy.Models;
-using Newtonsoft.Json;
+using AI_Buddy.Services;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -8,11 +8,15 @@ namespace AI_Buddy.Forms
 {
     public partial class PropertiesFrm : Form
     {
-        AIProperties _aiProperties = new AIProperties();
+        AIProperties _aiProperties;
+        FileService _fileService;
 
         public PropertiesFrm()
         {
             InitializeComponent();
+
+            _fileService = new FileService();
+            _aiProperties = new AIProperties();
 
             propertiesAIPrompt.PropertyValueChanged += PropertiesAIPrompt_PropertyValueChanged;
         }
@@ -29,7 +33,7 @@ namespace AI_Buddy.Forms
 
             if (File.Exists(filePath))
             {
-                _aiProperties = LoadFromJson<AIProperties>(filePath);
+                _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
             }
             
             this.propertiesAIPrompt.SelectedObject = _aiProperties;
@@ -44,23 +48,9 @@ namespace AI_Buddy.Forms
         {
             _aiProperties.DateLastModified = DateTime.Now;
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
-            SaveToJson(_aiProperties, filePath);
+            _fileService.SaveToJson(_aiProperties, filePath);
 
             MessageBox.Show("File has been saved successfully.", "Save Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-
-        public void SaveToJson<T>(T obj, string filePath)
-        {
-            string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-            File.WriteAllText(filePath, json);
-        }
-
-        public T LoadFromJson<T>(string filePath)
-        {
-            if (!File.Exists(filePath)) return default;
-            string json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

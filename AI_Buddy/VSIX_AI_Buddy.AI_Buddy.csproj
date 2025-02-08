@@ -58,6 +58,10 @@
     <Compile Include="Commands\HighlightedTextCmd.cs" />
     <Compile Include="Commands\PropertiesCmd.cs" />
     <Compile Include="Commands\SuggestImprovementsCmd.cs" />
+    <Compile Include="Components\AIPromptPanelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\PromptPanel.cs" />
     <Compile Include="Forms\PropertiesFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +82,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\ErrorService.cs" />
+    <Compile Include="Services\FileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -161,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Misc\" />
   </ItemGroup>
   <ItemGroup>
