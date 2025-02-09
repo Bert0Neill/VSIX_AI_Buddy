@@ -15,6 +15,7 @@ namespace AI_Buddy.Components
         public PromptWindowControl()
         {
             this.InitializeComponent();
+            this.txtPrompt.Text = string.Empty;
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -22,6 +23,11 @@ namespace AI_Buddy.Components
             MessageBox.Show(
               string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
               "ToolWindow1");
+        }
+
+        private void btnClearText_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
