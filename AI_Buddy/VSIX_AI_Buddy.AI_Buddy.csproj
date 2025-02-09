@@ -62,6 +62,7 @@
     <Compile Include="Components\PromptWindowControl.xaml.cs">
       <DependentUpon>PromptWindowControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\StringToVisibilityConverter.cs" />
     <Compile Include="Forms\PropertiesFrm.cs">
       <SubType>Form</SubType>
     </Compile>
