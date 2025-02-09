@@ -18,23 +18,10 @@ namespace AI_Buddy.Components
         public PromptWindowControl()
         {
             this.InitializeComponent();
-            this.txtPrompt.Text = string.Empty;
+
+            // load property settings from file
+            // save (last) prompt
         }
-
-        //private void btnSubmit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //UpdateResults(string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()));
-
-        //    //MessageBox.Show(
-        //    //  string.Format(System.Globalization.CultureInfo.CurrentUICulture, "Invoked '{0}'", this.ToString()),
-        //    //  "ToolWindow1");
-        //}
-
-        private void btnClearText_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
         // Clear results
         public void ClearResults()
@@ -62,11 +49,14 @@ namespace AI_Buddy.Components
             rtbResults.ScrollToEnd();
         }
 
-        // Example usage
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             ClearResults();
             AppendResult("Processing your request...");
+
+            // call AI API
+            // save prompt to file
+            // append result to RTB (keep appending if streaming)
 
             try
             {
@@ -77,13 +67,10 @@ namespace AI_Buddy.Components
             {
                 AppendResult(ex.Message, isError: true);
             }
+            finally
+            {
+                this.txtPrompt.Text = string.Empty; // clear for next prompt
+            }
         }
-
-        //public void UpdateResults(string content)
-        //{
-        //    txtResults.Text = content;
-        //    // Optional: Auto-scroll to bottom
-        //    txtResults.ScrollToEnd();
-        //}
     }
 }
