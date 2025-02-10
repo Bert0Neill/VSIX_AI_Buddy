@@ -99,11 +99,6 @@ namespace AI_Buddy.Components
                         Stretch = System.Windows.Media.Stretch.Uniform
                     };
 
-                    //// Wrap the image inside a BlockUIContainer
-                    //var container = new BlockUIContainer(image);
-
-                    //// Add the container to the RichTextBox document
-                    //rtbPrompt.Document.Blocks.Add(container);
                     var container = new InlineUIContainer(image);
 
                     // Get current paragraph or create a new one
@@ -118,9 +113,6 @@ namespace AI_Buddy.Components
                     {
                         rtbPrompt.Document.Blocks.Add(currentParagraph);
                     }
-
-                    //// Update caret position
-                    //rtbPrompt.CaretPosition = currentParagraph.ContentEnd;
 
                     // Insert a new empty paragraph after the image
                     Paragraph newParagraph = new Paragraph();
