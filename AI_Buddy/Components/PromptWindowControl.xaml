@@ -38,13 +38,16 @@
         <ScrollViewer Grid.Row="0"
               Style="{StaticResource ResultsScrollStyle}"
               Margin="0,0,0,10">
+            
             <RichTextBox x:Name="rtbResults"
                Background="Transparent"
                BorderThickness="0"
                IsReadOnly="True"
                VerticalScrollBarVisibility="Auto"
                Document="{StaticResource InitialResultsDocument}"
-               Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}">
+               Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
+                         
+                         PreviewKeyDown="RichTextBox_PreviewKeyDown">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
@@ -53,6 +56,7 @@
                     </Style>
                 </RichTextBox.Resources>
             </RichTextBox>
+            
         </ScrollViewer>
 
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0">
