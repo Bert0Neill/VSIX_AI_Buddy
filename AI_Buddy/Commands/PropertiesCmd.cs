@@ -93,11 +93,6 @@ namespace AI_Buddy.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-
-           
-
-
-
             // Show WinForms form with selected text
             var propertiesForm = new PropertiesFrm();
             propertiesForm.ShowDialog();

@@ -17,13 +17,6 @@ namespace AI_Buddy.Forms
 
             _fileService = new FileService();
             _aiProperties = new AIProperties();
-
-            propertiesAIPrompt.PropertyValueChanged += PropertiesAIPrompt_PropertyValueChanged;
-        }
-
-        private void PropertiesAIPrompt_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            btnSave.Enabled = true; // Enable the button when a property is modified
         }
 
         private void PropertiesFrm_Load(object sender, EventArgs e)

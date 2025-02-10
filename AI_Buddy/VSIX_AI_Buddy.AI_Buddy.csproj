@@ -123,6 +123,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Misc\ToDo.txt" />
     <VSCTCompile Include="Commands\AI_BuddyPackage.vsct">
       <Generator>VsctGenerator</Generator>
       <ResourceName>Menus.ctmenu</ResourceName>
@@ -173,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
-    <Folder Include="Misc\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\PropertiesFrm.resx">

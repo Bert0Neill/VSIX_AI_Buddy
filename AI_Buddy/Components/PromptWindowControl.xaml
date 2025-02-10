@@ -67,7 +67,10 @@
                  Padding="5"
                  Background="White"
                  Foreground="Black"
-                 AcceptsReturn="True">
+                 AcceptsReturn="True"
+                 GotFocus="rtbPrompt_GotFocus"
+                LostFocus="rtbPrompt_LostFocus"
+                Loaded="rtbPrompt_Loaded">
                 <RichTextBox.Style>
                     <Style TargetType="RichTextBox">
                         <Setter Property="Background" 
@@ -84,6 +87,6 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Stretch"
                 Margin="0,2,0,4"
-                Click="btnSubmit_Click"/>
+                Click="SubmitClickAsync"/>
     </Grid>
 </UserControl>
