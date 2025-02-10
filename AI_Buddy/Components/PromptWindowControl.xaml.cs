@@ -73,133 +73,65 @@ namespace AI_Buddy.Components
             }
             finally
             {
-                this.txtPrompt.Text = string.Empty; // clear for next prompt
+                rtbPrompt.Document = new FlowDocument();
+                // clear for next prompt
             }
         }
 
         #region RTB
-        private void RichTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+
+        private void rtbPrompt_Pasting(object sender, DataObjectPastingEventArgs e)
         {
-            if (e.Key == Key.V && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            if (e.DataObject.GetDataPresent(DataFormats.Bitmap))
             {
-                HandlePaste();
-                e.Handled = true;
-            }
-        }
+                e.CancelCommand(); // Prevent the default paste behavior
 
-        private void HandlePaste()
-        {
-            if (Clipboard.ContainsImage())
-            {
-                InsertImageFromClipboard();
-            }
-            else
-            {
-                rtbResults.Paste(); // Default text paste
-            }
-        }
-
-        private void InsertImageFromClipboard()
-        {
-            var bitmapSource = Clipboard.GetImage();
-            if (bitmapSource == null) return;
-
-            // Convert to BitmapImage
-            var bitmapImage = new BitmapImage();
-            using (var stream = new MemoryStream())
-            {
-                var encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-                encoder.Save(stream);
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = stream;
-                bitmapImage.EndInit();
-            }
-
-            // Create image container
-            //var image = new System.Windows.Controls.Image { Source = bitmapImage};
-
-            var image = new System.Windows.Controls.Image
-            {
-                Source = bitmapImage,
-                Width = 100, // Thumbnail width
-                Height = 100, // Thumbnail height
-                Stretch = Stretch.Uniform
-            };
-
-
-            var container = new InlineUIContainer(image);
-
-            // Get current paragraph or create a new one
-            TextPointer caretPos = rtbResults.CaretPosition;
-            Paragraph currentParagraph = caretPos.Paragraph ?? new Paragraph();
-
-            // Add the image to the paragraph's inlines
-            currentParagraph.Inlines.Add(container);
-
-            // If new paragraph, add to document
-            if (caretPos.Paragraph == null)
-            {
-                rtbResults.Document.Blocks.Add(currentParagraph);
-            }
-
-            // Update caret position
-            rtbResults.CaretPosition = currentParagraph.ContentEnd;
-        }
-
-        private void rtbResults_Drop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                foreach (string file in files)
+                // Retrieve the image from the clipboard
+                var bitmapSource = Clipboard.GetImage();
+                if (bitmapSource != null)
                 {
-                    if (file.EndsWith(".png") || file.EndsWith(".jpg") || file.EndsWith(".jpeg"))
+                    // Create an Image element
+                    System.Windows.Controls.Image image = new System.Windows.Controls.Image
                     {
-                        InsertThumbnailImage(file);
+                        Source = bitmapSource,
+                        Width = 100, // Set width or adjust dynamically
+                        Height = 100, // Set height or adjust dynamically
+                        Stretch = System.Windows.Media.Stretch.Uniform
+                    };
+
+                    //// Wrap the image inside a BlockUIContainer
+                    //var container = new BlockUIContainer(image);
+
+                    //// Add the container to the RichTextBox document
+                    //rtbPrompt.Document.Blocks.Add(container);
+                    var container = new InlineUIContainer(image);
+
+                    // Get current paragraph or create a new one
+                    TextPointer caretPos = rtbPrompt.CaretPosition;
+                    Paragraph currentParagraph = caretPos.Paragraph ?? new Paragraph();
+
+                    // Add the image to the paragraph's inlines
+                    currentParagraph.Inlines.Add(container);
+
+                    // If new paragraph, add to document
+                    if (caretPos.Paragraph == null)
+                    {
+                        rtbPrompt.Document.Blocks.Add(currentParagraph);
                     }
+
+                    //// Update caret position
+                    //rtbPrompt.CaretPosition = currentParagraph.ContentEnd;
+
+                    // Insert a new empty paragraph after the image
+                    Paragraph newParagraph = new Paragraph();
+                    rtbPrompt.Document.Blocks.Add(newParagraph);
+
+                    // Move the caret to the new paragraph
+                    rtbPrompt.CaretPosition = newParagraph.ContentStart;
                 }
             }
         }
 
-
-        private void InsertThumbnailImage(string imagePath)
-        {
-            try
-            {
-                BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
-                var image = new System.Windows.Controls.Image
-                {
-                    Source = bitmap,
-                    Width = 100, // Thumbnail width
-                    Height = 100, // Thumbnail height
-                    Stretch = Stretch.Uniform
-                };
-
-                InlineUIContainer container = new InlineUIContainer(image);
-
-                // Get current paragraph or create a new one
-                TextPointer caretPos = rtbResults.CaretPosition;
-                Paragraph currentParagraph = caretPos.Paragraph ?? new Paragraph();
-
-                // Add the image to the paragraph's inlines
-                currentParagraph.Inlines.Add(container);
-
-                // If new paragraph, add to document
-                if (caretPos.Paragraph == null)
-                {
-                    rtbResults.Document.Blocks.Add(currentParagraph);
-                }
-
-                // Update caret position
-                rtbResults.CaretPosition = currentParagraph.ContentEnd;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error inserting image: " + ex.Message);
-            }
-        }
         #endregion
     }
 }

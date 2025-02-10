@@ -38,16 +38,14 @@
         <ScrollViewer Grid.Row="0"
               Style="{StaticResource ResultsScrollStyle}"
               Margin="0,0,0,10">
-            
+
             <RichTextBox x:Name="rtbResults"
                Background="Transparent"
                BorderThickness="0"
                IsReadOnly="True"
                VerticalScrollBarVisibility="Auto"
                Document="{StaticResource InitialResultsDocument}"
-               Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
-                         
-                         PreviewKeyDown="RichTextBox_PreviewKeyDown">
+               Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
@@ -59,7 +57,7 @@
             
         </ScrollViewer>
 
-        <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0">
+        <!--<Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0">
             <TextBox x:Name="txtPrompt"
                      Height="30"
                      VerticalAlignment="Center"
@@ -84,7 +82,28 @@
                        IsHitTestVisible="False"
                        Foreground="#FF808080"
                        Visibility="{Binding Text, ElementName=txtPrompt, Converter={StaticResource StringToVisibilityConverter}}"/>
+        </Grid>-->
+
+        <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0">
+            <RichTextBox x:Name="rtbPrompt"
+                         DataObject.Pasting="rtbPrompt_Pasting"
+                 Height="80"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Stretch"
+                 Margin="0"
+                 Padding="5"
+                 Background="White"
+                 Foreground="Black"
+                 AcceptsReturn="True">
+                <RichTextBox.Style>
+                    <Style TargetType="RichTextBox">
+                        <Setter Property="Background" 
+                        Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"/>
+                    </Style>
+                </RichTextBox.Style>
+            </RichTextBox>
         </Grid>
+
 
         <Button x:Name="btnSubmit"
                 Grid.Row="3"
