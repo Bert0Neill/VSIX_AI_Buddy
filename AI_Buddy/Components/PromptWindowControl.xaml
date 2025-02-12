@@ -58,35 +58,99 @@
         </ScrollViewer>
 
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0">
-            <RichTextBox x:Name="rtbPrompt"
-                 DataObject.Pasting="rtbPrompt_Pasting"
-                 Height="80"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Stretch"
-                 Margin="0"
-                 Padding="5"
-                 Background="White"
-                 Foreground="Black"
-                 AcceptsReturn="True"
-                 GotFocus="rtbPrompt_GotFocus"
+            <Border CornerRadius="8" 
+            Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
+            BorderThickness="1"
+            BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ActiveBorderKey}}"
+            Margin="0"
+            Padding="2">
+                <RichTextBox x:Name="rtbPrompt"
+                DataObject.Pasting="rtbPrompt_Pasting"
+                Height="80"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Stretch"
+                Margin="0"
+                Padding="5"
+                Background="Transparent"
+                Foreground="White"
+                primitives:TextBoxBase.CaretBrush="White"
+                AcceptsReturn="True"
+                GotFocus="rtbPrompt_GotFocus"
                 LostFocus="rtbPrompt_LostFocus"
-                Loaded="rtbPrompt_Loaded">
-                <RichTextBox.Style>
-                    <Style TargetType="RichTextBox">
-                        <Setter Property="Background" 
-                        Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"/>
-                    </Style>
-                </RichTextBox.Style>
-            </RichTextBox>
+                Loaded="rtbPrompt_Loaded"
+                BorderThickness="0"
+                xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                        <Style TargetType="{x:Type Run}">
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                    </RichTextBox.Resources>
+                    <RichTextBox.Style>
+                        <Style TargetType="RichTextBox">
+                            <Setter Property="Background" 
+                      Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="RichTextBox">
+                                        <Border CornerRadius="8"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}">
+                                            <ScrollViewer x:Name="PART_ContentHost"
+                                            Padding="{TemplateBinding Padding}"
+                                            VerticalScrollBarVisibility="Auto"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </RichTextBox.Style>
+                </RichTextBox>
+            </Border>
         </Grid>
 
         <Button x:Name="btnSubmit"
-                Grid.Row="3"
-                Height="30"
-                Content="Submit Prompt"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Stretch"
-                Margin="0,2,0,4"
-                Click="SubmitClickAsync"/>
+        Grid.Row="3"
+        Height="30"
+        Content="Submit Prompt"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Stretch"
+        Margin="0,2,0,4"
+        Click="SubmitClickAsync">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#DDDDDD"/>
+                    <Setter Property="BorderBrush" Value="#666666"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border" 
+                            CornerRadius="15"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#CCCCCC"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#AAAAAA"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </UserControl>

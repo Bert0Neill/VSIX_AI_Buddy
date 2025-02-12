@@ -3,6 +3,7 @@ using AI_Buddy.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
@@ -27,7 +28,7 @@ namespace AI_Buddy.Components
     /// </summary>
     public partial class PromptWindowControl : UserControl
     {
-
+        private readonly string _placeholderText = "Enter AI prompt";
         AIProperties _aiProperties;
         FileService _fileService;
 
@@ -74,10 +75,9 @@ namespace AI_Buddy.Components
         {
             try
             {
-                //// Add the spinner GIF
-                //var spinner = AddLoadingSpinnerToRTB();
-
                 var prompt = ExtractRichTextBoxContent();
+
+                if (prompt == _placeholderText) return; // nothing to enter
 
                 // Create a Run element with the text and set its foreground color to blue
                 Run run = new Run("Prompt: " + prompt)
@@ -91,20 +91,15 @@ namespace AI_Buddy.Components
                 // Insert the paragraph into the RichTextBox's document
                 this.rtbResults.Document.Blocks.Add(paragraph);
 
-                //this.rtbPrompt.Document = new FlowDocument();
-                ClearRTBWithPlaceholder();
+                this.rtbPrompt.Document = new FlowDocument(); // clear prompt rtb
 
                 await GetOllamaResponseStreamAsync(prompt, chunk =>
                 {
                     AppendResult(chunk); // Display each chunk as it arrives
                 });
-
-                //// Remove spinner after completion
-                //RemoveLoadingSpinnerFromRTB(spinner);
             }
             catch (Exception ex)
             {
-                this.Cursor = Cursors.Arrow;
                 AppendResult(ex.Message, isError: true);
             }
             finally
@@ -237,13 +232,11 @@ namespace AI_Buddy.Components
                             }
                         }
                     }
-                    extractedText.AppendLine(); // New line after each paragraph
                 }
             }
 
             // Display extracted text
             string plainText = extractedText.ToString();
-            //MessageBox.Show("Extracted Text:\n" + plainText);
 
             // Process extracted images
             int count = 1;
@@ -256,7 +249,6 @@ namespace AI_Buddy.Components
             return plainText;
         }
 
-        // Helper function to save images
         private void SaveImage(BitmapSource image, string filePath)
         {
             using (FileStream stream = new FileStream(filePath, FileMode.Create))
@@ -266,44 +258,6 @@ namespace AI_Buddy.Components
                 encoder.Save(stream);
             }
         }
-
-        private InlineUIContainer AddLoadingSpinnerToRTB()
-        {
-            // Create an image control
-            System.Windows.Controls.Image spinnerImage = new System.Windows.Controls.Image
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Resources/spinner.gif")),
-                Width = 32, // Adjust size if needed
-                Height = 32
-            };
-
-            // Create an InlineUIContainer to hold the image
-            InlineUIContainer container = new InlineUIContainer(spinnerImage);
-
-            // Insert into the RichTextBox
-            Paragraph paragraph = new Paragraph(container);
-            rtbResults.Document.Blocks.Add(paragraph);
-
-            return container;
-        }
-
-        private void RemoveLoadingSpinnerFromRTB(InlineUIContainer spinnerContainer)
-        {
-            foreach (Block block in rtbResults.Document.Blocks.ToList())
-            {
-                if (block is Paragraph paragraph && paragraph.Inlines.Contains(spinnerContainer))
-                {
-                    paragraph.Inlines.Remove(spinnerContainer);
-                    if (paragraph.Inlines.Count == 0)
-                    {
-                        rtbResults.Document.Blocks.Remove(paragraph);
-                    }
-                    break;
-                }
-            }
-        }
-
-        private readonly string PlaceholderText = "Enter AI prompt";
 
         private void rtbPrompt_Loaded(object sender, RoutedEventArgs e)
         {
@@ -323,7 +277,7 @@ namespace AI_Buddy.Components
         private void rtbPrompt_LostFocus(object sender, RoutedEventArgs e)
         {
             // Restore the placeholder if the content is empty
-            SetPlaceholderIfNeeded();
+            //SetPlaceholderIfNeeded();
         }
 
         private void SetPlaceholderIfNeeded()
@@ -333,33 +287,14 @@ namespace AI_Buddy.Components
             {
                 rtbPrompt.Foreground = System.Windows.Media.Brushes.Gray; // Set text color to gray for placeholder
                 rtbPrompt.Document.Blocks.Clear();
-                rtbPrompt.Document.Blocks.Add(new Paragraph(new Run(PlaceholderText)));
+                rtbPrompt.Document.Blocks.Add(new Paragraph(new Run(_placeholderText)));
             }
         }
 
         private bool IsPlaceholderActive()
         {
             // Check if the placeholder text is currently active
-            return new TextRange(rtbPrompt.Document.ContentStart, rtbPrompt.Document.ContentEnd).Text.Trim() == PlaceholderText;
+            return new TextRange(rtbPrompt.Document.ContentStart, rtbPrompt.Document.ContentEnd).Text.Trim() == _placeholderText;
         }
-
-        private void ClearRTBWithPlaceholder()
-        {
-            // Clear the RichTextBox content
-            rtbPrompt.Document = new FlowDocument();
-
-            // Check if the document is empty and insert the placeholder
-            if (rtbPrompt.Document.Blocks.Count == 0)
-            {
-                // Create a new paragraph with placeholder text
-                Paragraph placeholderParagraph = new Paragraph(new Run("Enter AI prompt..."));
-                placeholderParagraph.Foreground = System.Windows.Media.Brushes.Gray;
-
-                // Add the placeholder paragraph to the document
-                rtbPrompt.Document.Blocks.Add(placeholderParagraph);
-            }
-        }
-
-
     }
 }
