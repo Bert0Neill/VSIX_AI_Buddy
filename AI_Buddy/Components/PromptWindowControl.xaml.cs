@@ -28,7 +28,7 @@ namespace AI_Buddy.Components
     /// </summary>
     public partial class PromptWindowControl : UserControl
     {
-        private readonly string _placeholderText = "Enter AI prompt";
+        private readonly string _placeholderText = "Enter AI prompt...";
         AIProperties _aiProperties;
         FileService _fileService;
 
