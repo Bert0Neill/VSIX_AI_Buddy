@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 
 namespace AI_Buddy.Components
@@ -35,7 +36,7 @@ namespace AI_Buddy.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptWindowControl"/> class.
         /// </summary>
-        public PromptWindowControl()
+        public PromptWindowControl(string promptAnswer = "")
         {
             this.InitializeComponent();
 
@@ -48,6 +49,12 @@ namespace AI_Buddy.Components
             if (File.Exists(filePath))
             {
                 _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
+            }
+
+            // if displaying AI panel, check if an answer was passed in
+            if (promptAnswer.Trim() != string.Empty)
+            {
+                AppendResult(promptAnswer); // Display answer in panel
             }
         }
 
@@ -155,22 +162,19 @@ namespace AI_Buddy.Components
 
         private async Task GetOllamaResponseStreamAsync(string prompt, Action<string> onResponseChunk)
         {
-            string ollamaUrl = "http://localhost:11434/api/generate";
-            string model = "deepseek-r1:1.5b"; // Ensure the model is running locally
-
             using (HttpClient client = new HttpClient())
             {
                 var requestBody = new
                 {
-                    model = model,
+                    model = _aiProperties.PromptLLMName,
                     prompt = prompt,
-                    stream = false // Enable streaming response
+                    stream = _aiProperties.IsPromptResponseStreaming // Enable streaming response
                 };
 
                 string jsonContent = JsonConvert.SerializeObject(requestBody);
                 HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                using (var request = new HttpRequestMessage(HttpMethod.Post, ollamaUrl) { Content = httpContent })
+                using (var request = new HttpRequestMessage(HttpMethod.Post, _aiProperties.AIPromptURL) { Content = httpContent })
                 using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
                 {
                     if (!response.IsSuccessStatusCode)
