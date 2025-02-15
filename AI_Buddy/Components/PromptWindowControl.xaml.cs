@@ -82,6 +82,8 @@ namespace AI_Buddy.Components
         {
             try
             {
+                Mouse.OverrideCursor = Cursors.Wait;
+
                 var prompt = ExtractRichTextBoxContent();
 
                 if (prompt == _placeholderText) return; // nothing to enter
@@ -111,6 +113,7 @@ namespace AI_Buddy.Components
             }
             finally
             {
+                Mouse.OverrideCursor = null;
             }
         }
 
@@ -165,11 +168,15 @@ namespace AI_Buddy.Components
             using (HttpClient client = new HttpClient())
             {
                 var requestBody = new
-                {
+                { 
                     model = _aiProperties.PromptLLMName,
                     prompt = prompt,
                     stream = _aiProperties.IsPromptResponseStreaming // Enable streaming response
                 };
+
+                // append api key to request
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_aiProperties.AIPromptKey}");
 
                 string jsonContent = JsonConvert.SerializeObject(requestBody);
                 HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
