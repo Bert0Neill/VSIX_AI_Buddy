@@ -18,6 +18,19 @@ namespace AI_Buddy.Components
     [Guid("0713738e-d4a3-4b80-bc3d-529ac3e5212c")]
     public class PromptWindow : ToolWindowPane
     {
+        private string _promptResponse;
+        public string PromptResponse
+        {
+            get => _promptResponse;
+            set
+            {
+                _promptResponse = value;
+                if (this.Content is PromptWindowControl control)
+                {
+                    control.UpdatePromptResponse(value);
+                }
+            }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptWindow"/> class.
         /// </summary>

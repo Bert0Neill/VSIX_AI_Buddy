@@ -30,13 +30,13 @@ namespace AI_Buddy.Components
     public partial class PromptWindowControl : UserControl
     {
         private readonly string _placeholderText = "Enter AI prompt...";
-        AIProperties _aiProperties;
-        FileService _fileService;
+        private readonly AIProperties _aiProperties;
+        private readonly FileService _fileService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptWindowControl"/> class.
         /// </summary>
-        public PromptWindowControl(string promptAnswer = "")
+        public PromptWindowControl()
         {
             this.InitializeComponent();
 
@@ -49,12 +49,6 @@ namespace AI_Buddy.Components
             if (File.Exists(filePath))
             {
                 _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
-            }
-
-            // if displaying AI panel, check if an answer was passed in
-            if (promptAnswer.Trim() != string.Empty)
-            {
-                AppendResult(promptAnswer); // Display answer in panel
             }
         }
 
@@ -88,23 +82,23 @@ namespace AI_Buddy.Components
 
                 if (prompt == _placeholderText) return; // nothing to enter
 
-                // Create a Run element with the text and set its foreground color to blue
+                // display prompt in yellow
                 Run run = new Run("Prompt: " + prompt)
                 {
                     Foreground = System.Windows.Media.Brushes.Yellow
                 };
 
-                // Create a new Paragraph and add the Run element
+                // create a new Paragraph and add the Run element
                 Paragraph paragraph = new Paragraph(run);
 
-                // Insert the paragraph into the RichTextBox's document
+                // insert the paragraph into the RichTextBox's document
                 this.rtbResults.Document.Blocks.Add(paragraph);
 
                 this.rtbPrompt.Document = new FlowDocument(); // clear prompt rtb
 
                 await GetOllamaResponseStreamAsync(prompt, chunk =>
                 {
-                    AppendResult(chunk); // Display each chunk as it arrives
+                    AppendResult(chunk); // display each chunk as it arrives (cater for streaming)
                 });
             }
             catch (Exception ex)
@@ -198,8 +192,8 @@ namespace AI_Buddy.Components
                             var line = await reader.ReadLineAsync();
                             if (!string.IsNullOrWhiteSpace(line))
                             {
-                                var jsonResponse = JsonConvert.DeserializeObject<OllamaResponse>(line);
-                                jsonResponse.response = Regex.Replace(jsonResponse.response, @"<\/?think>", "")
+                                var jsonResponse = JsonConvert.DeserializeObject<AIHosterResponse>(line);
+                                jsonResponse.response = Regex.Replace(jsonResponse.response, @"<\/?think>", "") // remove DeepSeek's <think> elements
                                     .TrimStart('\n', '\r')
                                     .TrimStart();
 
@@ -211,7 +205,7 @@ namespace AI_Buddy.Components
             }
         }
 
-        public class OllamaResponse
+        public class AIHosterResponse
         {
             public string response { get; set; }
         }
@@ -306,6 +300,11 @@ namespace AI_Buddy.Components
         {
             // Check if the placeholder text is currently active
             return new TextRange(rtbPrompt.Document.ContentStart, rtbPrompt.Document.ContentEnd).Text.Trim() == _placeholderText;
+        }
+
+        internal void UpdatePromptResponse(string value)
+        {
+            AppendResult(value);
         }
     }
 }
