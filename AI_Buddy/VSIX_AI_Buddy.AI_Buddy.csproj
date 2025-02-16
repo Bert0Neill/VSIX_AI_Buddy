@@ -130,8 +130,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Misc\Images\test.png" />
-    <None Include="Misc\ReadMe.md" />
+    <Content Include="ReadMe\Images\test.png" />
+    <None Include="ReadMe\ReadMe.md" />
     <VSCTCompile Include="Commands\AI_BuddyPackage.vsct">
       <Generator>VsctGenerator</Generator>
       <ResourceName>Menus.ctmenu</ResourceName>
