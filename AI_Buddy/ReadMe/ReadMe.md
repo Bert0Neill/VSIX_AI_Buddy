@@ -16,6 +16,23 @@ __This will also be bold__
 
 _You **can** combine them_
 
+
+# C# Code Example
+
+Here is a simple C# program that prints "Hello, World!" to the console:
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Hello, World!");
+    }
+}
+```
+
 ## Lists
 
 ### Unordered
