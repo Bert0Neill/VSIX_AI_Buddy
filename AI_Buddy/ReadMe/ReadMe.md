@@ -55,6 +55,7 @@ class Program
 ## Images
 
 ![This is an alt text.](Images/test.png "This is a sample image.")
+<!--![Remote URL.](https://www.example.com/example.jpg "This is a sample image.")-->
 
 ## Links
 
