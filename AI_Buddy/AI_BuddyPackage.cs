@@ -51,8 +51,8 @@ namespace AI_Buddy
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await AI_Buddy.Commands.PropertiesCmd.InitializeAsync(this);
-            await AI_Buddy.Commands.HighlightedTextCmd.InitializeAsync(this);
             await AI_Buddy.Commands.GenerateUnitTestCmd.InitializeAsync(this);
+            //await AI_Buddy.Commands.GenerateUnitTestCmd.InitializeAsync(this);
             await AI_Buddy.Commands.GenerateCommentsCmd.InitializeAsync(this);
             await AI_Buddy.Commands.SuggestImprovementsCmd.InitializeAsync(this);
             await AI_Buddy.Commands.GenerateCodeFromHintCmd.InitializeAsync(this);

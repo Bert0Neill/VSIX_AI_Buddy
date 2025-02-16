@@ -52,7 +52,6 @@ namespace AI_Buddy.Commands
         public const int EditorMenuGroup = 0x1021;
         public const int AISettingsCmdId = 0x0100;
         public const int GenerateTestCmdId = 0x0102;
-        public const int cmdidGenerateUnitTestCmd = 0x1025;
         public const int cmdidGenerateCommentsCmd = 0x1026;
         public const int cmdidSuggestImprovementsCmd = 0x1027;
         public const int cmdidGenerateCodeFromTextCmd = 0x1028;

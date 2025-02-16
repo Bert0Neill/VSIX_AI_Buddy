@@ -55,7 +55,6 @@
     <Compile Include="Commands\GenerateCodeFromHintCmd.cs" />
     <Compile Include="Commands\GenerateCommentsCmd.cs" />
     <Compile Include="Commands\GenerateUnitTestCmd.cs" />
-    <Compile Include="Commands\HighlightedTextCmd.cs" />
     <Compile Include="Commands\PropertiesCmd.cs" />
     <Compile Include="Commands\SuggestImprovementsCmd.cs" />
     <Compile Include="Components\PromptWindow.cs" />
@@ -76,7 +75,7 @@
       <DependentUpon>VisualPrompt.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AIProperties.cs" />
-    <Compile Include="PromptStrings.Designer.cs">
+    <Compile Include="Resources\PromptStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PromptStrings.resx</DependentUpon>
@@ -189,7 +188,7 @@
     <EmbeddedResource Include="Forms\VisualPrompt.resx">
       <DependentUpon>VisualPrompt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PromptStrings.resx">
+    <EmbeddedResource Include="Resources\PromptStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PromptStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>

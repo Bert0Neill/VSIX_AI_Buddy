@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AI_Buddy {
+namespace AI_Buddy.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AI_Buddy {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AI_Buddy.PromptStrings", typeof(PromptStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AI_Buddy.Resources.PromptStrings", typeof(PromptStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

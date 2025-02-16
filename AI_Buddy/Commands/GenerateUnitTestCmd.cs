@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using AI_Buddy.Components;
+using AI_Buddy.Services;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
 namespace AI_Buddy.Commands
@@ -17,7 +16,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4133;
+        public const int CommandId = 0x0102;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -27,7 +26,12 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly Microsoft.VisualStudio.Shell.Package package;
+        private readonly AsyncPackage _package;
+        private readonly EditorService _editorService;
+        private readonly AIService _aiService;
+
+      
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateUnitTestCmd"/> class.
@@ -37,12 +41,15 @@ namespace AI_Buddy.Commands
         /// <param name="commandService">Command service to add command to, not null.</param>
         private GenerateUnitTestCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            _package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+            var menuItem = new OleMenuCommand(Execute, menuCommandID);
             commandService.AddCommand(menuItem);
+
+            _editorService = new EditorService();
+            _aiService = new AIService();
         }
 
         /// <summary>
@@ -61,7 +68,7 @@ namespace AI_Buddy.Commands
         {
             get
             {
-                return this.package;
+                return this._package;
             }
         }
 
@@ -71,35 +78,42 @@ namespace AI_Buddy.Commands
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in GenerateUnitTestCmd's constructor requires
-            // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new GenerateUnitTestCmd(package, commandService);
+            var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (commandService != null)
+            {
+                new GenerateUnitTestCmd(package, commandService);
+            }
         }
 
-        /// <summary>
-        /// This function is the callback used to execute the command when the menu item is clicked.
-        /// See the constructor to see how the menu item is associated with this function using
-        /// OleMenuCommandService service and MenuCommand class.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
-        private void Execute(object sender, EventArgs e)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "GenerateUnitTestCmd";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+        private async void Execute(object sender, EventArgs e)
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            string text = await _editorService.GetSelectedTextAsync(this._package);
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                // generate unit test for prompt
+                string prompt = "Write a unit test for this code: " + text;
+
+                await _aiService.GetOllamaResponseStreamAsync(prompt, chunk =>
+                {
+                    var promnptWindow = this._package.FindToolWindow(typeof(PromptWindow), 0, true) as PromptWindow;
+
+                    if (promnptWindow?.Frame == null)
+                    {
+                        throw new NotSupportedException("Cannot create Prompt Window.");
+                    }
+
+                    promnptWindow.PromptResponse = chunk; // update window panel control
+
+                    var windowFrame = (IVsWindowFrame)promnptWindow.Frame;
+                    Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+                });
+            }
         }
     }
 }
