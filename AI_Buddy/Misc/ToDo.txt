@@ -1,3 +1,0 @@
-﻿Drag an image to RTB
-Post image to AI
-Display an spinner in RTB and remove when finished
