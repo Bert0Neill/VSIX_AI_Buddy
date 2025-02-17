@@ -57,6 +57,7 @@ namespace AI_Buddy
             await AI_Buddy.Commands.SuggestImprovementsCmd.InitializeAsync(this);
             await AI_Buddy.Commands.GenerateCodeFromHintCmd.InitializeAsync(this);
             await AI_Buddy.Commands.DisplayPromptCmd.InitializeAsync(this);
+            await AI_Buddy.Commands.AIHealthCheckCmd.InitializeAsync(this);
         }
 
         #endregion

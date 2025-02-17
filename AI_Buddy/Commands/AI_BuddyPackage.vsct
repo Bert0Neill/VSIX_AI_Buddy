@@ -78,13 +78,23 @@
         </Strings>
       </Button>
     
-      <Button guid="guidAI_BuddyPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0100" type="Button">
+      <!--<Button guid="guidAI_BuddyPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
-        <Icon guid="guidImages" id="bmpPic1" />
+        <Icon guid="guidImages" id="bmpPicImageHealthCheck" />
         <Strings>
           <ButtonText>ToolWindow1</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
+		
+   
+
+		<Button guid="guidAI_BuddyPackageCmdSet" id="cmdidAIHealthCheckCmd" priority="0x0106" type="Button">
+			<Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+			<Icon guid="guidImageHealthCheck" id="bmpPicImageHealthCheck" />
+			<Strings>
+				<ButtonText>AI Health Check</ButtonText>
+			</Strings>
+		</Button>
     </Buttons>
 
     <!-- Rest of your existing elements -->
@@ -97,6 +107,7 @@
 		  <Bitmap guid="guidImagesPrompt" href="Resources\Double-J-Design-Ravenna-3d-Comments.16.png" usedList="bmpPicPrompt" />
 		  <Bitmap guid="guidAIImages" href="Resources\Social-balloon-friends.16.png" usedList="bmpPicAIPrompt" />
       <Bitmap guid="guidImages" href="..\Components\Resources\ToolWindow1Command.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImageHealthCheck" href="Resources\emergency_health_healthcare.png" usedList="bmpPicImageHealthCheck" />
     </Bitmaps>
   </Commands>
 
@@ -112,6 +123,7 @@
       <IDSymbol value="4136" name="cmdidGenerateCodeFromTextCmd" />
       <IDSymbol value="4137" name="cmdidDisplayPromptCmd" />
       <IDSymbol value="4138" name="cmdidToolWindow1Command" />
+      <IDSymbol value="4139" name="cmdidAIHealthCheckCmd" />
     </GuidSymbol>
 
     <GuidSymbol name="guidAI_BuddyPackage" value="{2f259d1a-ec99-4bc7-bc55-f1540b114913}" />
@@ -142,8 +154,21 @@
 	  <GuidSymbol name="guidAIImages" value="{cccfebe1-cea8-4ad4-880f-e87580db2bee}">
 		  <IDSymbol name="bmpPicAIPrompt" value="1" />
 	  </GuidSymbol>
+
+	  <GuidSymbol name="guidImageHealthCheck" value="{f3ae7c69-4f62-438d-a386-a11549044a8c}">
+		  <IDSymbol name="bmpPicImageHealthCheck" value="1" />
+	  </GuidSymbol>
   
     <GuidSymbol value="{71f44574-1df5-40ae-b6b6-c9b507db1837}" name="guidImages">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{f615327b-31bf-4748-ac72-d956e5c3ea81}" name="guidImages1">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

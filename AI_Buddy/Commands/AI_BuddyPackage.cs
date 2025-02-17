@@ -39,8 +39,14 @@ namespace AI_Buddy.Commands
         public const string guidAIImagesString = "cccfebe1-cea8-4ad4-880f-e87580db2bee";
         public static Guid guidAIImages = new Guid(guidAIImagesString);
 
+        public const string guidImageHealthCheckString = "f3ae7c69-4f62-438d-a386-a11549044a8c";
+        public static Guid guidImageHealthCheck = new Guid(guidImageHealthCheckString);
+
         public const string guidImagesString = "71f44574-1df5-40ae-b6b6-c9b507db1837";
         public static Guid guidImages = new Guid(guidImagesString);
+
+        public const string guidImages1String = "f615327b-31bf-4748-ac72-d956e5c3ea81";
+        public static Guid guidImages1 = new Guid(guidImages1String);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -57,6 +63,7 @@ namespace AI_Buddy.Commands
         public const int cmdidGenerateCodeFromTextCmd = 0x1028;
         public const int cmdidDisplayPromptCmd = 0x1029;
         public const int cmdidToolWindow1Command = 0x102A;
+        public const int cmdidAIHealthCheckCmd = 0x102B;
         public const int bmpPicSettings = 0x0001;
         public const int bmpPicTest = 0x0001;
         public const int bmpPicComment = 0x0001;
@@ -64,6 +71,7 @@ namespace AI_Buddy.Commands
         public const int bmpPicCodeGen = 0x0001;
         public const int bmpPicPrompt = 0x0001;
         public const int bmpPicAIPrompt = 0x0001;
+        public const int bmpPicImageHealthCheck = 0x0001;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPicSearch = 0x0003;

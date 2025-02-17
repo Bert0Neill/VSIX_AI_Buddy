@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\AIHealthCheckCmd.cs" />
     <Compile Include="Commands\AI_BuddyPackage.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,6 +141,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Commands\Resources\AIHealthCheckCmd.png" />
+    <Content Include="Commands\Resources\emergency_health_healthcare.png" />
     <Content Include="ReadMe\Images\test.png" />
     <None Include="ReadMe\ReadMe.md" />
     <VSCTCompile Include="Commands\AI_BuddyPackage.vsct">
