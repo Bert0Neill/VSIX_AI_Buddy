@@ -61,6 +61,33 @@ namespace AI_Buddy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Write a method in {0}, using the following text: {1}.
+        /// </summary>
+        internal static string FnxFromHighlightedTextPrompt {
+            get {
+                return ResourceManager.GetString("FnxFromHighlightedTextPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How can this {0} code be improved: {1}.
+        /// </summary>
+        internal static string SuggestCodeImprovements {
+            get {
+                return ResourceManager.GetString("SuggestCodeImprovements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment the following {0} code: {1}.
+        /// </summary>
+        internal static string SuggestCommentsForCode {
+            get {
+                return ResourceManager.GetString("SuggestCommentsForCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Write a unit test in {0} for the framework {1}, for this code: {2}.
         /// </summary>
         internal static string UnitTestPrompt {

@@ -116,7 +116,7 @@ private readonly EditorService _editorService;
             if (!string.IsNullOrEmpty(text))
             {
                 // generate unit test for prompt
-                string prompt = String.Format(PromptStrings.UnitTestPrompt, _aiProperties.CodingLanguage, _aiProperties.TestFramework, text);
+                string prompt = String.Format(PromptStrings.FnxFromHighlightedTextPrompt, _aiProperties.CodingLanguage, text);
 
                 // Initialize and show the window once before streaming
                 var promptWindow = this.package.FindToolWindow(typeof(PromptWindow), 0, true) as PromptWindow;
