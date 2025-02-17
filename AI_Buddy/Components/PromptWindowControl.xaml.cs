@@ -83,6 +83,39 @@ namespace AI_Buddy.Components
             });
         }
 
+        //public void AppendResult(string text, bool isError = false)
+        //{
+        //    rtbResults.Dispatcher.BeginInvoke(new Action(() =>
+        //    {
+        //        Paragraph paragraph = null;
+
+        //        // For non-error text, append to the last paragraph if available
+        //        if (!isError && rtbResults.Document.Blocks.LastBlock is Paragraph lastParagraph)
+        //        {
+        //            paragraph = lastParagraph;
+        //        }
+        //        else
+        //        {
+        //            paragraph = new Paragraph();
+        //            rtbResults.Document.Blocks.Add(paragraph);
+        //        }
+
+        //        if (isError)
+        //        {
+        //            paragraph.Foreground = System.Windows.Media.Brushes.OrangeRed;
+        //            paragraph.Inlines.Add(new Bold(new Run("ERROR: ")));
+        //        }
+
+        //        // Append the new text with a trailing space for separation
+        //        paragraph.Inlines.Add(new Run(text + " "));
+
+        //        // Force the UI to scroll to the end and update the layout
+        //        rtbResults.ScrollToEnd();
+        //        rtbResults.UpdateLayout();
+        //    }), System.Windows.Threading.DispatcherPriority.Background);
+        //}
+
+
 
 
         private async void SubmitClickAsync(object sender, RoutedEventArgs e)
