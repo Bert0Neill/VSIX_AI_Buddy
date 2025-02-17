@@ -1,5 +1,6 @@
 ﻿using AI_Buddy.Models;
 using AI_Buddy.Services;
+using Markdown.Xaml;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,7 +29,7 @@ namespace AI_Buddy.Components
     /// <summary>
     /// Interaction logic for ToolWindow1Control.
     /// </summary>
-    public partial class PromptWindowControl : UserControl
+    public partial class PromptWindowControl : System.Windows.Controls.UserControl
     {
         private readonly string _placeholderText = "Enter AI prompt...";
         private readonly AIProperties _aiProperties;
@@ -56,6 +58,11 @@ namespace AI_Buddy.Components
         {
             rtbResults.Dispatcher.Invoke(() =>
             {
+
+                //var markdownConverter = new Markdown.Xaml.Markdown();
+                //var flowDocument = markdownConverter.Transform(text);
+                //rtbResults.Document = flowDocument;
+
                 Paragraph paragraph = null;
 
                 // For error messages, you might want to display them in their own paragraph.
@@ -80,9 +87,15 @@ namespace AI_Buddy.Components
                 // Append the new text (you might want to add a space if necessary)
                 paragraph.Inlines.Add(new Run(text + " "));
                 rtbResults.ScrollToEnd();
+                rtbResults.UpdateLayout();
             });
         }
 
+        /// <summary>
+        /// / append text as it is streamed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         //public void AppendResult(string text, bool isError = false)
         //{
         //    rtbResults.Dispatcher.BeginInvoke(new Action(() =>
@@ -122,16 +135,16 @@ namespace AI_Buddy.Components
         {
             try
             {
-                Mouse.OverrideCursor = Cursors.Wait;
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
 
                 var prompt = ExtractRichTextBoxContent();
 
                 if (prompt == _placeholderText) return; // nothing to enter
 
-                // display prompt in yellow
-                Run run = new Run("Prompt: " + prompt)
+                // display prompt in blue
+                Run run = new Run($"Prompt: {prompt} {Environment.NewLine + Environment.NewLine}")
                 {
-                    Foreground = System.Windows.Media.Brushes.Yellow
+                    Foreground = System.Windows.Media.Brushes.Blue
                 };
 
                 // create a new Paragraph and add the Run element
@@ -160,12 +173,12 @@ namespace AI_Buddy.Components
         #region RTB
         private void rtbPrompt_Pasting(object sender, DataObjectPastingEventArgs e)
         {
-            if (e.DataObject.GetDataPresent(DataFormats.Bitmap))
+            if (e.DataObject.GetDataPresent(System.Windows.Forms.DataFormats.Bitmap))
             {
                 e.CancelCommand(); // Prevent the default paste behavior
 
                 // Retrieve the image from the clipboard
-                var bitmapSource = Clipboard.GetImage();
+                var bitmapSource = System.Windows.Clipboard.GetImage();
                 if (bitmapSource != null)
                 {
                     // Create an Image element
