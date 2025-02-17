@@ -117,7 +117,7 @@ namespace AI_Buddy.Commands
                     var requestBody = new
                     {
                         model = _aiProperties.PromptLLMName,
-                        prompt = "Is LLM Hoster available?",
+                        prompt = "Is LLM Hoster working?",
                         stream = _aiProperties.IsPromptResponseStreaming // Enable streaming response
                     };
 
@@ -135,7 +135,7 @@ namespace AI_Buddy.Commands
                         {
                             VsShellUtilities.ShowMessageBox(
                                                 this.package,
-                                                "AI API Hoster is not responding",
+                                                "AI LLM Hoster is not responding",
                                                 "Health Check Error",
                                                 OLEMSGICON.OLEMSGICON_WARNING,
                                                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
@@ -144,7 +144,7 @@ namespace AI_Buddy.Commands
 
                         VsShellUtilities.ShowMessageBox(
                                                this.package,
-                                               "AI API Hoster is responding.",
+                                               "AI LLM Hoster is responding.",
                                                "Health Check Success",
                                                OLEMSGICON.OLEMSGICON_INFO,
                                                OLEMSGBUTTON.OLEMSGBUTTON_OK,
