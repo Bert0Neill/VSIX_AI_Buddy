@@ -52,25 +52,38 @@ namespace AI_Buddy.Components
             }
         }
 
-        // Append formatted text
         public void AppendResult(string text, bool isError = false)
         {
-            var paragraph = new Paragraph
+            rtbResults.Dispatcher.Invoke(() =>
             {
-                Margin = new Thickness(0, 0, 0, 5)
-            };
+                Paragraph paragraph = null;
 
-            if (isError)
-            {
-                paragraph.Foreground = System.Windows.Media.Brushes.OrangeRed;
-                paragraph.Inlines.Add(new Bold(new Run("ERROR: ")));
-            }
+                // For error messages, you might want to display them in their own paragraph.
+                // But for non-error text, append to the last paragraph if possible.
+                if (!isError && rtbResults.Document.Blocks.LastBlock is Paragraph lastParagraph)
+                {
+                    paragraph = lastParagraph;
+                }
+                else
+                {
+                    paragraph = new Paragraph();
+                    rtbResults.Document.Blocks.Add(paragraph);
+                }
 
-            paragraph.Inlines.Add(new Run(text));
+                if (isError)
+                {
+                    // If error, prepend error label in bold (you might want to start a new paragraph for clarity)
+                    paragraph.Foreground = System.Windows.Media.Brushes.OrangeRed;
+                    paragraph.Inlines.Add(new Bold(new Run("ERROR: ")));
+                }
 
-            rtbResults.Document.Blocks.Add(paragraph);
-            rtbResults.ScrollToEnd();
+                // Append the new text (you might want to add a space if necessary)
+                paragraph.Inlines.Add(new Run(text + " "));
+                rtbResults.ScrollToEnd();
+            });
         }
+
+
 
         private async void SubmitClickAsync(object sender, RoutedEventArgs e)
         {
@@ -305,6 +318,39 @@ namespace AI_Buddy.Components
         internal void UpdatePromptResponse(string value)
         {
             AppendResult(value);
+        }
+
+        private string RemoveMarkdownSyntax(string input)
+        {
+            if (string.IsNullOrEmpty(input)) { return input; }
+
+            // Remove code blocks (```) and inline code (`code`)
+            input = System.Text.RegularExpressions.Regex.Replace(input, "(`{3,})([\\s\\S]*?)\\1", string.Empty);
+            input = System.Text.RegularExpressions.Regex.Replace(input, "`([^`]+)`", "$1");
+
+            // Remove bold and italics (**, __, *, _)
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"(\*\*|__)(.*?)\1", "$2");
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"(\*|_)(.*?)\1", "$2");
+
+            // Remove headers (e.g., # Header)
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"^\s{0,3}(#{1,6})\s+", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
+
+            // Remove links [text](url) -> text
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"\[(.*?)\]\((.*?)\)", "$1");
+
+            // Remove images ![alt](url) -> alt
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"!\[(.*?)\]\((.*?)\)", "$1");
+
+            // Remove blockquotes (starting with >)
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"^\s*>+\s?", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
+
+            // Remove horizontal rules (---, ***, etc.)
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"^\s{0,3}([-*_])(?:\s*\1){2,}\s*$", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
+
+            // Optionally, remove any remaining markdown symbols such as stray asterisks or underscores
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"\\([\\`*_{}\[\]()#+\-.!])", "$1");
+
+            return input;
         }
     }
 }

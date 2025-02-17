@@ -43,7 +43,7 @@
         <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
 		  <Icon guid="guidImagesTest" id="bmpPicTest" />
         <Strings>
-          <ButtonText>Generate MS Test</ButtonText>
+          <ButtonText>Generate Test</ButtonText>
         </Strings>
       </Button>
 
@@ -108,7 +108,6 @@
       <IDSymbol name="EditorMenuGroup" value="0x1021" />
       <IDSymbol name="AISettingsCmdId" value="0x0100" />
       <IDSymbol name="GenerateTestCmdId" value="0x0102" />
-      <!--<IDSymbol value="4133" name="cmdidGenerateUnitTestCmd" />-->
       <IDSymbol value="4134" name="cmdidGenerateCommentsCmd" />
       <IDSymbol value="4135" name="cmdidSuggestImprovementsCmd" />
       <IDSymbol value="4136" name="cmdidGenerateCodeFromTextCmd" />

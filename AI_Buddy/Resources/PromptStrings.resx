@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UnitTestPrompt" xml:space="preserve">
-    <value />
+    <value>Write a unit test in {0} for the framework {1}, for this code: {2}</value>
   </data>
 </root>
