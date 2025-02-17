@@ -36,23 +36,6 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Row="0" Style="{StaticResource ResultsScrollStyle}">
-            
-            <!--<RichTextBox x:Name="rtbResults"
-               Background="Transparent"
-               BorderThickness="0"
-               IsReadOnly="True"
-               VerticalScrollBarVisibility="Auto"
-               Document="{StaticResource InitialResultsDocument}"
-               Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}">
-                <RichTextBox.Resources>
-                    <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="FontFamily" Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"/>
-                        <Setter Property="FontSize" Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
-                    </Style>
-                </RichTextBox.Resources>
-            </RichTextBox>-->
-
             <Border CornerRadius="8" Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}" BorderThickness="1" BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ActiveBorderKey}}" Margin="0" Padding="2">            
                 <RichTextBox x:Name="rtbResults"
                 Background="White"
@@ -71,12 +54,6 @@
                     </RichTextBox.Resources>
                 </RichTextBox>
             </Border>
-
-            
-
-
-
-
         </ScrollViewer>
 
         <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,1,0,0">
@@ -91,8 +68,6 @@
                 Height="80"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Stretch"
-                Margin="2"
-                Padding="5"
                 Background="Transparent"
                 Foreground="White"
                 primitives:TextBoxBase.CaretBrush="White"

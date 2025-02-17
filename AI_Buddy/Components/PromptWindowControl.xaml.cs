@@ -135,30 +135,68 @@ namespace AI_Buddy.Components
         {
             try
             {
+                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+
+                //var prompt = ExtractRichTextBoxContent();
+
+                //if (prompt == _placeholderText) return; // nothing to enter
+
+                //// display prompt in blue
+                //Run run = new Run($"Prompt: {prompt} {Environment.NewLine}")
+                //{
+                //    Foreground = System.Windows.Media.Brushes.Blue
+                //};
+
+                //// create a new Paragraph and add the Run element
+                //Paragraph paragraph = new Paragraph(run);
+
+                //// insert the paragraph into the RichTextBox's document
+                //this.rtbResults.Document.Blocks.Add(paragraph);
+
+                //this.rtbPrompt.Document = new FlowDocument(); // clear prompt rtb
+
+                //await GetOllamaResponseStreamAsync(prompt, chunk =>
+                //{
+                //    AppendResult(chunk); // display each chunk as it arrives (cater for streaming)
+                //});
+
                 Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
 
                 var prompt = ExtractRichTextBoxContent();
 
                 if (prompt == _placeholderText) return; // nothing to enter
 
-                // display prompt in blue
-                Run run = new Run($"Prompt: {prompt} {Environment.NewLine + Environment.NewLine}")
+                // Create a new Paragraph
+                Paragraph paragraph = new Paragraph();
+
+                // Create a Run for "Prompt:" in black
+                Run promptLabel = new Run("Prompt: ")
+                {
+                    Foreground = System.Windows.Media.Brushes.Black
+                };
+
+                // Create a Run for the actual prompt text in blue
+                Run promptRun = new Run($"{prompt}{Environment.NewLine}")
                 {
                     Foreground = System.Windows.Media.Brushes.Blue
                 };
 
-                // create a new Paragraph and add the Run element
-                Paragraph paragraph = new Paragraph(run);
+                // Add both Runs to the Paragraph
+                paragraph.Inlines.Add(promptLabel);
+                paragraph.Inlines.Add(promptRun);
 
-                // insert the paragraph into the RichTextBox's document
+                // Insert the paragraph into the RichTextBox's document
                 this.rtbResults.Document.Blocks.Add(paragraph);
 
-                this.rtbPrompt.Document = new FlowDocument(); // clear prompt rtb
+                // Clear the rtbPrompt content
+                this.rtbPrompt.Document = new FlowDocument();
 
                 await GetOllamaResponseStreamAsync(prompt, chunk =>
                 {
-                    AppendResult(chunk); // display each chunk as it arrives (cater for streaming)
+                    AppendResult(chunk); // Display each chunk as it arrives (cater for streaming)
                 });
+
+
             }
             catch (Exception ex)
             {
