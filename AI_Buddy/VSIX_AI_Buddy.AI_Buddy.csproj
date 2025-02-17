@@ -92,6 +92,7 @@
     <Compile Include="Services\EditorService.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\RichTextBoxParagraphGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

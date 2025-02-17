@@ -27,6 +27,7 @@ namespace AI_Buddy.Components
         private readonly string _placeholderTextPrompt = "Enter AI prompt...";
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
+        private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptWindowControl"/> class.
@@ -38,6 +39,7 @@ namespace AI_Buddy.Components
 
             _fileService = new FileService();
             _aiProperties = new AIProperties();
+            _richTextBoxParagraphGenerator = new RichTextBoxParagraphGenerator();
 
             // read file settings
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
@@ -46,6 +48,8 @@ namespace AI_Buddy.Components
             {
                 _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
             }
+
+            rtbResults.Document.Blocks.Clear();
         }
 
         private void PromptWindowControl_Unloaded(object sender, RoutedEventArgs e)
@@ -97,27 +101,27 @@ namespace AI_Buddy.Components
 
                 if (prompt == _placeholderTextPrompt) return; // nothing to enter
 
-                // Create a new Paragraph
-                Paragraph paragraph = new Paragraph();
+                //// Create a new Paragraph
+                //Paragraph paragraph = new Paragraph();
 
-                // Create a Run for "Prompt:" in black
-                Run promptLabel = new Run("Prompt: ")
-                {
-                    Foreground = System.Windows.Media.Brushes.Black
-                };
+                //// Create a Run for "Prompt:" in black
+                //Run promptLabel = new Run("Prompt: ")
+                //{
+                //    Foreground = System.Windows.Media.Brushes.Black
+                //};
 
-                // Create a Run for the actual prompt text in blue
-                Run promptRun = new Run($"{prompt}{Environment.NewLine + Environment.NewLine}") // add blank line after prompt
-                {
-                    Foreground = System.Windows.Media.Brushes.Blue
-                };
+                //// Create a Run for the actual prompt text in blue
+                //Run promptRun = new Run($"{prompt}{Environment.NewLine + Environment.NewLine}") // add blank line after prompt
+                //{
+                //    Foreground = System.Windows.Media.Brushes.Blue
+                //};
 
-                // Add both Runs to the Paragraph
-                paragraph.Inlines.Add(promptLabel);
-                paragraph.Inlines.Add(promptRun);
+                //// Add both Runs to the Paragraph
+                //paragraph.Inlines.Add(promptLabel);
+                //paragraph.Inlines.Add(promptRun);
 
                 // Insert the paragraph into the RichTextBox's document
-                this.rtbResults.Document.Blocks.Add(paragraph);
+                this.rtbResults.Document.Blocks.Add(_richTextBoxParagraphGenerator.GenerateSubmitPromptParagraph(prompt, _richTextBoxParagraphGenerator.IsRichTextBoxEmpty(this.rtbResults)));
 
                 // Clear the rtbPrompt content
                 this.rtbPrompt.Document = new FlowDocument();

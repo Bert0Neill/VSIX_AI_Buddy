@@ -37,6 +37,7 @@ namespace AI_Buddy.Commands
         private readonly AIService _aiService;
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
+        private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateUnitTestCmd"/> class.
@@ -57,6 +58,7 @@ namespace AI_Buddy.Commands
             _aiService = new AIService();
             _aiProperties = new AIProperties();
             _fileService = new FileService();
+            _richTextBoxParagraphGenerator = new RichTextBoxParagraphGenerator();
 
             // read file settings
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
@@ -119,33 +121,7 @@ namespace AI_Buddy.Commands
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                Paragraph paragraph = new Paragraph();
-                var promptDetails = new Paragraph[2];
-                Run promptLabel = new Run($"Prompt: ")
-                {
-                    Foreground = System.Windows.Media.Brushes.Black,                    
-                };                
-
-                Run promptDescription = new Run($"Generating a Unit Test ({_aiProperties.TestFramework}) in {_aiProperties.CodingLanguage} for your code: {Environment.NewLine}")
-                {
-                    Foreground = System.Windows.Media.Brushes.Blue                    
-                };
-                paragraph.Inlines.Add(promptLabel);
-                paragraph.Inlines.Add(promptDescription);
-
-                promptDetails[0] = paragraph;
-
-                // create a Run for the code (blue & italic)
-                paragraph = new Paragraph();
-                Run promptCode = new Run($"{text} {Environment.NewLine + Environment.NewLine}") 
-                {
-                    Foreground = System.Windows.Media.Brushes.Black,
-                    FontStyle = System.Windows.FontStyles.Italic
-                };
-                paragraph.Inlines.Add(promptCode);
-
-                promptDetails[1] = paragraph;
-                promptWindow.FormattedPrompt = promptDetails; // update window panel control
+                promptWindow.FormattedPrompt = _richTextBoxParagraphGenerator.GenerateUnitTestParagraph(prompt, text, _aiProperties); // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;
                 Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
