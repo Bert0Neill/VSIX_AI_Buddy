@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.Shell;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Documents;
@@ -28,13 +29,13 @@ namespace AI_Buddy.Components
                 _promptResponse = value;
                 if (this.Content is PromptWindowControl control)
                 {
-                    control.UpdatePromptResponse(value);
+                  control.UpdatePromptResponse(value);
                 }
             }
         }
 
-        private Run[] _formattedPrompt;
-        public Run[] FormattedPrompt
+        private Paragraph[] _formattedPrompt;
+        public Paragraph[] FormattedPrompt
         {
             get => _formattedPrompt;
             set

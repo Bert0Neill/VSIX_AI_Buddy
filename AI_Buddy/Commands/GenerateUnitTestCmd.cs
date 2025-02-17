@@ -119,20 +119,32 @@ namespace AI_Buddy.Commands
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                var promptDetails = new Run[2];
+                Paragraph paragraph = new Paragraph();
+                var promptDetails = new Paragraph[2];
+                Run promptLabel = new Run($"Prompt: ")
+                {
+                    Foreground = System.Windows.Media.Brushes.Black,                    
+                };                
+
                 Run promptDescription = new Run($"Generating a Unit Test ({_aiProperties.TestFramework}) in {_aiProperties.CodingLanguage} for your code: {Environment.NewLine}")
                 {
-                    Foreground = System.Windows.Media.Brushes.Blue,                    
+                    Foreground = System.Windows.Media.Brushes.Blue                    
                 };
-                promptDetails[0] = promptDescription;
+                paragraph.Inlines.Add(promptLabel);
+                paragraph.Inlines.Add(promptDescription);
+
+                promptDetails[0] = paragraph;
 
                 // create a Run for the code (blue & italic)
+                paragraph = new Paragraph();
                 Run promptCode = new Run($"{text} {Environment.NewLine + Environment.NewLine}") 
                 {
-                    Foreground = System.Windows.Media.Brushes.IndianRed,
-                    FontStyle = System.Windows.FontStyles.Italic // Set the text to italic
+                    Foreground = System.Windows.Media.Brushes.Black,
+                    FontStyle = System.Windows.FontStyles.Italic
                 };
-                promptDetails[1] = promptCode;
+                paragraph.Inlines.Add(promptCode);
+
+                promptDetails[1] = paragraph;
                 promptWindow.FormattedPrompt = promptDetails; // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;

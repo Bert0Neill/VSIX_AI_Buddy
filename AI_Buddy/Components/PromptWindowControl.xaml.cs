@@ -343,13 +343,13 @@ namespace AI_Buddy.Components
             }
         }
 
-        internal void UpdateResultPrompt(Run[] value)
+        internal void UpdateResultPrompt(Paragraph[] value)
         {
             foreach (var item in value)
             {
-                Paragraph paragraph = new Paragraph();
-                paragraph.Inlines.Add(item);
-                this.rtbResults.Document.Blocks.Add(paragraph);
+                //Paragraph paragraph = new Paragraph();
+                //paragraph.Inlines.Add(item);
+                this.rtbResults.Document.Blocks.Add(item);
             }
 
             // Ensure scrolling works correctly
