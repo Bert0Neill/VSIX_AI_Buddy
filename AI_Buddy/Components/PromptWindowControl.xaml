@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
              xmlns:local="clr-namespace:AI_Buddy.Converter"         
-             
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
              MinWidth="300"
              Height="Auto"
-             Name="PromptWindow">
+             Name="PromptWindow"             
+             >
 
     <UserControl.Resources>
         <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
@@ -20,12 +20,6 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         </Style>
-
-        <FlowDocument x:Key="InitialResultsDocument">
-            <Paragraph FontStyle="Italic" Foreground="Gray">
-                Results will appear here...
-            </Paragraph>
-        </FlowDocument>
     </UserControl.Resources>
 
     <Grid Margin="1">
@@ -42,15 +36,13 @@
                 Background="White"
                 BorderThickness="0"
                 IsReadOnly="True"
-                VerticalScrollBarVisibility="Auto"
-                Document="{StaticResource InitialResultsDocument}"
-                Foreground="Black">
+                VerticalScrollBarVisibility="Auto">
                     <RichTextBox.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="FontFamily" Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontFamilyKey}}"/>
                             <Setter Property="FontSize" Value="{DynamicResource {x:Static vsshell:VsFonts.EnvironmentFontSizeKey}}"/>
-                            <Setter Property="Foreground" Value="Black"/>
+                            
                         </Style>
                     </RichTextBox.Resources>
                 </RichTextBox>

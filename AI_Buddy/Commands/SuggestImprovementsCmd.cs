@@ -125,7 +125,7 @@ private readonly EditorService _editorService;
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                promptWindow.PromptResponse = $"{Environment.NewLine}{Environment.NewLine}Generating {_aiProperties.TestFramework} prompt for your code: {Environment.NewLine} {text} {Environment.NewLine}"; // update window panel control
+                promptWindow.PromptResponse = $"{Environment.NewLine}Generating {_aiProperties.TestFramework} prompt for your code: {Environment.NewLine} {text} {Environment.NewLine}"; // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;
                 Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.Runtime.InteropServices;
+using System.Windows.Documents;
 
 namespace AI_Buddy.Components
 {
@@ -31,11 +32,26 @@ namespace AI_Buddy.Components
                 }
             }
         }
+
+        private Run[] _formattedPrompt;
+        public Run[] FormattedPrompt
+        {
+            get => _formattedPrompt;
+            set
+            {
+                _formattedPrompt = value;
+                if (this.Content is PromptWindowControl control)
+                {
+                    control.UpdateResultPrompt(value);
+                }
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptWindow"/> class.
         /// </summary>
         public PromptWindow() : base(null)
-        {
+        {            
             this.Caption = "AI Buddy Prompt Pane";
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,

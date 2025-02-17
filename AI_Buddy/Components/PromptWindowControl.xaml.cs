@@ -1,30 +1,20 @@
 ﻿using AI_Buddy.Models;
 using AI_Buddy.Services;
 using HTMLConverter;
-using Markdown.Xaml;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Markup;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 
 namespace AI_Buddy.Components
@@ -34,7 +24,7 @@ namespace AI_Buddy.Components
     /// </summary>
     public partial class PromptWindowControl : System.Windows.Controls.UserControl
     {
-        private readonly string _placeholderText = "Enter AI prompt...";
+        private readonly string _placeholderTextPrompt = "Enter AI prompt...";
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
 
@@ -44,6 +34,7 @@ namespace AI_Buddy.Components
         public PromptWindowControl()
         {
             this.InitializeComponent();
+            this.Unloaded += PromptWindowControl_Unloaded;
 
             _fileService = new FileService();
             _aiProperties = new AIProperties();
@@ -55,6 +46,11 @@ namespace AI_Buddy.Components
             {
                 _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
             }
+        }
+
+        private void PromptWindowControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Mouse.OverrideCursor = null;
         }
 
         public void AppendResult(string text, bool isError = false)
@@ -91,43 +87,6 @@ namespace AI_Buddy.Components
             });
         }
 
-        /// <summary>
-        /// / append text as it is streamed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //public void AppendResult(string text, bool isError = false)
-        //{
-        //    rtbResults.Dispatcher.BeginInvoke(new Action(() =>
-        //    {
-        //        Paragraph paragraph = null;
-
-        //        // For non-error text, append to the last paragraph if available
-        //        if (!isError && rtbResults.Document.Blocks.LastBlock is Paragraph lastParagraph)
-        //        {
-        //            paragraph = lastParagraph;
-        //        }
-        //        else
-        //        {
-        //            paragraph = new Paragraph();
-        //            rtbResults.Document.Blocks.Add(paragraph);
-        //        }
-
-        //        if (isError)
-        //        {
-        //            paragraph.Foreground = System.Windows.Media.Brushes.OrangeRed;
-        //            paragraph.Inlines.Add(new Bold(new Run("ERROR: ")));
-        //        }
-
-        //        // Append the new text with a trailing space for separation
-        //        paragraph.Inlines.Add(new Run(text + " "));
-
-        //        // Force the UI to scroll to the end and update the layout
-        //        rtbResults.ScrollToEnd();
-        //        rtbResults.UpdateLayout();
-        //    }), System.Windows.Threading.DispatcherPriority.Background);
-        //}
-
         private async void SubmitClickAsync(object sender, RoutedEventArgs e)
         {
             try
@@ -136,7 +95,7 @@ namespace AI_Buddy.Components
 
                 var prompt = ExtractRichTextBoxContent();
 
-                if (prompt == _placeholderText) return; // nothing to enter
+                if (prompt == _placeholderTextPrompt) return; // nothing to enter
 
                 // Create a new Paragraph
                 Paragraph paragraph = new Paragraph();
@@ -148,7 +107,7 @@ namespace AI_Buddy.Components
                 };
 
                 // Create a Run for the actual prompt text in blue
-                Run promptRun = new Run($"{prompt}{Environment.NewLine}")
+                Run promptRun = new Run($"{prompt}{Environment.NewLine + Environment.NewLine}") // add blank line after prompt
                 {
                     Foreground = System.Windows.Media.Brushes.Blue
                 };
@@ -273,11 +232,7 @@ namespace AI_Buddy.Components
                 }
             }
         }
-
-        public class AIHosterResponse
-        {
-            public string response { get; set; }
-        }
+       
         private string ExtractRichTextBoxContent()
         {
             StringBuilder extractedText = new StringBuilder();
@@ -360,14 +315,14 @@ namespace AI_Buddy.Components
             {
                 rtbPrompt.Foreground = System.Windows.Media.Brushes.Gray; // Set text color to gray for placeholder
                 rtbPrompt.Document.Blocks.Clear();
-                rtbPrompt.Document.Blocks.Add(new Paragraph(new Run(_placeholderText)));
+                rtbPrompt.Document.Blocks.Add(new Paragraph(new Run(_placeholderTextPrompt)));
             }
         }
 
         private bool IsPlaceholderActive()
         {
             // Check if the placeholder text is currently active
-            return new TextRange(rtbPrompt.Document.ContentStart, rtbPrompt.Document.ContentEnd).Text.Trim() == _placeholderText;
+            return new TextRange(rtbPrompt.Document.ContentStart, rtbPrompt.Document.ContentEnd).Text.Trim() == _placeholderTextPrompt;
         }
 
         internal void UpdatePromptResponse(string value)
@@ -386,6 +341,21 @@ namespace AI_Buddy.Components
             {
                 return XamlReader.Load(xmlReader) as FlowDocument;
             }
+        }
+
+        internal void UpdateResultPrompt(Run[] value)
+        {
+            foreach (var item in value)
+            {
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(item);
+                this.rtbResults.Document.Blocks.Add(paragraph);
+            }
+
+            // Ensure scrolling works correctly
+            rtbResults.CaretPosition = rtbResults.Document.ContentEnd;
+            rtbResults.ScrollToEnd();
+            rtbResults.Focus(); // Optional: Ensures UI refresh
         }
     }
 }

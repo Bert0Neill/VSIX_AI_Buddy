@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.IO;
+using System.Windows.Documents;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 using Task = System.Threading.Tasks.Task;
 
@@ -118,7 +119,21 @@ namespace AI_Buddy.Commands
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                promptWindow.PromptResponse = $"{Environment.NewLine}{Environment.NewLine}Generating a Unit Test ({_aiProperties.TestFramework}) in {_aiProperties.CodingLanguage} for your code: {Environment.NewLine} {text} {Environment.NewLine + Environment.NewLine}"; // update window panel control
+                var promptDetails = new Run[2];
+                Run promptDescription = new Run($"Generating a Unit Test ({_aiProperties.TestFramework}) in {_aiProperties.CodingLanguage} for your code: {Environment.NewLine}")
+                {
+                    Foreground = System.Windows.Media.Brushes.Blue,                    
+                };
+                promptDetails[0] = promptDescription;
+
+                // create a Run for the code (blue & italic)
+                Run promptCode = new Run($"{text} {Environment.NewLine + Environment.NewLine}") 
+                {
+                    Foreground = System.Windows.Media.Brushes.IndianRed,
+                    FontStyle = System.Windows.FontStyles.Italic // Set the text to italic
+                };
+                promptDetails[1] = promptCode;
+                promptWindow.FormattedPrompt = promptDetails; // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;
                 Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());

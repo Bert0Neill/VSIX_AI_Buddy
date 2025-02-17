@@ -74,6 +74,7 @@
     <Compile Include="Forms\VisualPrompt.Designer.cs">
       <DependentUpon>VisualPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\AIHosterResponse.cs" />
     <Compile Include="Models\AIProperties.cs" />
     <Compile Include="Resources\PromptStrings.Designer.cs">
       <AutoGen>True</AutoGen>
