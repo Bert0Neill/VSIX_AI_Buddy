@@ -25,9 +25,8 @@
 			<Strings>
 				<ButtonText>Your AI Buddy</ButtonText>
 			</Strings>
-			<!--<CommandFlag>IconAndText</CommandFlag>-->
 		</Menu>
-    </Menus>
+	</Menus>
 
 	  <!-- Submenu item -->
     <Buttons>
