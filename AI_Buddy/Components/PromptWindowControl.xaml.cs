@@ -1,5 +1,6 @@
 ﻿using AI_Buddy.Models;
 using AI_Buddy.Services;
+using HTMLConverter;
 using Markdown.Xaml;
 using Newtonsoft.Json;
 using System;
@@ -18,8 +19,10 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
@@ -58,15 +61,8 @@ namespace AI_Buddy.Components
         {
             rtbResults.Dispatcher.Invoke(() =>
             {
-
-                //var markdownConverter = new Markdown.Xaml.Markdown();
-                //var flowDocument = markdownConverter.Transform(text);
-                //rtbResults.Document = flowDocument;
-
                 Paragraph paragraph = null;
 
-                // For error messages, you might want to display them in their own paragraph.
-                // But for non-error text, append to the last paragraph if possible.
                 if (!isError && rtbResults.Document.Blocks.LastBlock is Paragraph lastParagraph)
                 {
                     paragraph = lastParagraph;
@@ -76,6 +72,7 @@ namespace AI_Buddy.Components
                     paragraph = new Paragraph();
                     rtbResults.Document.Blocks.Add(paragraph);
                 }
+                paragraph.Foreground = System.Windows.Media.Brushes.Black; // default
 
                 if (isError)
                 {
@@ -86,8 +83,11 @@ namespace AI_Buddy.Components
 
                 // Append the new text (you might want to add a space if necessary)
                 paragraph.Inlines.Add(new Run(text + " "));
+
+                // Ensure scrolling works correctly
+                rtbResults.CaretPosition = rtbResults.Document.ContentEnd;
                 rtbResults.ScrollToEnd();
-                rtbResults.UpdateLayout();
+                rtbResults.Focus(); // Optional: Ensures UI refresh
             });
         }
 
@@ -128,38 +128,10 @@ namespace AI_Buddy.Components
         //    }), System.Windows.Threading.DispatcherPriority.Background);
         //}
 
-
-
-
         private async void SubmitClickAsync(object sender, RoutedEventArgs e)
         {
             try
             {
-                //Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
-
-                //var prompt = ExtractRichTextBoxContent();
-
-                //if (prompt == _placeholderText) return; // nothing to enter
-
-                //// display prompt in blue
-                //Run run = new Run($"Prompt: {prompt} {Environment.NewLine}")
-                //{
-                //    Foreground = System.Windows.Media.Brushes.Blue
-                //};
-
-                //// create a new Paragraph and add the Run element
-                //Paragraph paragraph = new Paragraph(run);
-
-                //// insert the paragraph into the RichTextBox's document
-                //this.rtbResults.Document.Blocks.Add(paragraph);
-
-                //this.rtbPrompt.Document = new FlowDocument(); // clear prompt rtb
-
-                //await GetOllamaResponseStreamAsync(prompt, chunk =>
-                //{
-                //    AppendResult(chunk); // display each chunk as it arrives (cater for streaming)
-                //});
-
                 Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
 
                 var prompt = ExtractRichTextBoxContent();
@@ -306,7 +278,6 @@ namespace AI_Buddy.Components
         {
             public string response { get; set; }
         }
-
         private string ExtractRichTextBoxContent()
         {
             StringBuilder extractedText = new StringBuilder();
@@ -404,37 +375,17 @@ namespace AI_Buddy.Components
             AppendResult(value);
         }
 
-        private string RemoveMarkdownSyntax(string input)
+        private FlowDocument HtmlToFlowDocument(string html)
         {
-            if (string.IsNullOrEmpty(input)) { return input; }
+            // Convert HTML to XAML (you need to include the HtmlToXamlConverter helper)
+            string xaml = HtmlToXamlConverter.ConvertHtmlToXaml(html, true);
 
-            // Remove code blocks (```) and inline code (`code`)
-            input = System.Text.RegularExpressions.Regex.Replace(input, "(`{3,})([\\s\\S]*?)\\1", string.Empty);
-            input = System.Text.RegularExpressions.Regex.Replace(input, "`([^`]+)`", "$1");
-
-            // Remove bold and italics (**, __, *, _)
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"(\*\*|__)(.*?)\1", "$2");
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"(\*|_)(.*?)\1", "$2");
-
-            // Remove headers (e.g., # Header)
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"^\s{0,3}(#{1,6})\s+", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
-
-            // Remove links [text](url) -> text
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"\[(.*?)\]\((.*?)\)", "$1");
-
-            // Remove images ![alt](url) -> alt
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"!\[(.*?)\]\((.*?)\)", "$1");
-
-            // Remove blockquotes (starting with >)
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"^\s*>+\s?", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
-
-            // Remove horizontal rules (---, ***, etc.)
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"^\s{0,3}([-*_])(?:\s*\1){2,}\s*$", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
-
-            // Optionally, remove any remaining markdown symbols such as stray asterisks or underscores
-            input = System.Text.RegularExpressions.Regex.Replace(input, @"\\([\\`*_{}\[\]()#+\-.!])", "$1");
-
-            return input;
+            // Load FlowDocument from XAML
+            using (StringReader stringReader = new StringReader(xaml))
+            using (XmlReader xmlReader = XmlReader.Create(stringReader))
+            {
+                return XamlReader.Load(xmlReader) as FlowDocument;
+            }
         }
     }
 }

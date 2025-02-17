@@ -109,7 +109,7 @@ namespace AI_Buddy.Commands
             if (!string.IsNullOrEmpty(text))
             {
                 // generate unit test for prompt
-                string prompt = String.Format(PromptStrings.UnitTestPrompt, _aiProperties.CodingLanguage, _aiProperties.TestFramework, text);
+                string prompt = String.Format(PromptStrings.UnitTestPrompt, _aiProperties.CodingLanguage, _aiProperties.TestFramework, Environment.NewLine + text);
 
                 // Initialize and show the window once before streaming
                 var promptWindow = this._package.FindToolWindow(typeof(PromptWindow), 0, true) as PromptWindow;
@@ -118,16 +118,15 @@ namespace AI_Buddy.Commands
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                promptWindow.PromptResponse = $"{Environment.NewLine}{Environment.NewLine}Generating {_aiProperties.TestFramework} prompt for your code: {Environment.NewLine} {text} {Environment.NewLine}"; // update window panel control
+                promptWindow.PromptResponse = $"{Environment.NewLine}{Environment.NewLine}Generating a Unit Test ({_aiProperties.TestFramework}) in {_aiProperties.CodingLanguage} for your code: {Environment.NewLine} {text} {Environment.NewLine + Environment.NewLine}"; // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;
                 Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
 
                 // Start streaming and update the window's control for each chunk
                 await _aiService.GetOllamaResponseStreamAsync(prompt, chunk =>
-                {
-                    // Append or update the response without re-showing the window
-                    promptWindow.PromptResponse = chunk;
+                {                    
+                    promptWindow.PromptResponse = chunk; // append the response
                 });
             }
         }

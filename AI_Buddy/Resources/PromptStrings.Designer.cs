@@ -88,7 +88,7 @@ namespace AI_Buddy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Write a unit test in {0} for the framework {1}, for this code: {2}.
+        ///   Looks up a localized string similar to Write a unit test in {0} for the testing framework {1}, for this code: {2}.
         /// </summary>
         internal static string UnitTestPrompt {
             get {

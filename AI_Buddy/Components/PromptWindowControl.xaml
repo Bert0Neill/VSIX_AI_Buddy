@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
-             xmlns:local="clr-namespace:AI_Buddy.Converter"             
+             xmlns:local="clr-namespace:AI_Buddy.Converter"         
+             
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
@@ -21,7 +22,7 @@
         </Style>
 
         <FlowDocument x:Key="InitialResultsDocument">
-            <Paragraph FontStyle="Italic" Foreground="{DynamicResource {x:Static vsshell:VsBrushes.GrayTextKey}}">
+            <Paragraph FontStyle="Italic" Foreground="Gray">
                 Results will appear here...
             </Paragraph>
         </FlowDocument>
