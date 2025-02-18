@@ -78,5 +78,6 @@ namespace AI_Buddy.Commands
         public const int bmpPicX = 0x0004;
         public const int bmpPicArrows = 0x0005;
         public const int bmpPicStrikethrough = 0x0006;
+  
     }
 }

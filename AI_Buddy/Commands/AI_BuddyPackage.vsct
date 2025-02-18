@@ -38,15 +38,26 @@
         </Strings>
       </Button>
 
-      <Button guid="guidAI_BuddyPackageCmdSet" id="GenerateTestCmdId" priority="0x0102" type="Button">
+      <!--<Button guid="guidAI_BuddyPackageCmdSet" id="GenerateTestCmdId" priority="0x0102" type="Button">
         <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
 		  <Icon guid="guidImagesTest" id="bmpPicTest" />
         <Strings>
           <ButtonText>Generate Test</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
 
-      <Button guid="guidAI_BuddyPackageCmdSet" id="cmdidGenerateCommentsCmd" priority="0x0103" type="Button">
+		<Button guid="guidAI_BuddyPackageCmdSet" id="GenerateTestCmdId" priority="0x0102" type="Button">
+			<Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
+			<Icon guid="guidImagesTest" id="bmpPicTest" />
+			<CommandFlag>DynamicVisibility</CommandFlag>
+			<!--<CommandFlag>DefaultDisabled</CommandFlag>-->
+			<Strings>
+				<ButtonText>Generate Test</ButtonText>
+			</Strings>
+		</Button>
+
+
+		<Button guid="guidAI_BuddyPackageCmdSet" id="cmdidGenerateCommentsCmd" priority="0x0103" type="Button">
         <Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
 		  <Icon guid="guidImagesComment" id="bmpPicComment" />
         <Strings>

@@ -39,6 +39,9 @@ namespace AI_Buddy.Commands
         private readonly FileService _fileService;
         private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
 
+        //private IVsMonitorSelection _selectionMonitor;
+        //private uint _selectionCookie;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateUnitTestCmd"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
@@ -52,7 +55,10 @@ namespace AI_Buddy.Commands
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new OleMenuCommand(Execute, menuCommandID);
+            menuItem.BeforeQueryStatus += BeforeQueryStatus;
             commandService.AddCommand(menuItem);
+
+           
 
             _editorService = new EditorService();
             _aiService = new AIService();
@@ -67,6 +73,14 @@ namespace AI_Buddy.Commands
             {
                 _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
             }
+        }
+
+        private void BeforeQueryStatus(object sender, EventArgs e)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var command = sender as OleMenuCommand;
+            command.Enabled = _editorService.GetSelectedTextAsync(this._package).Result != string.Empty;
+            //command.Visible = _editorService.GetSelectedTextAsync(this._package).Result != string.Empty;
         }
 
         /// <summary>
@@ -96,6 +110,7 @@ namespace AI_Buddy.Commands
         public static async Task InitializeAsync(AsyncPackage package)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
+
             var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
