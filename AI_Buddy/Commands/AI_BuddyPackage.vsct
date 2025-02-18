@@ -8,7 +8,7 @@
     <Groups>
       <!-- Existing groups -->
       <Group guid="guidAI_BuddyPackageCmdSet" id="EditorMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
       </Group>
 
       <!-- New group for submenu items -->
@@ -77,16 +77,6 @@
           <ButtonText>Display Prompt</ButtonText>
         </Strings>
       </Button>
-    
-      <!--<Button guid="guidAI_BuddyPackageCmdSet" id="cmdidToolWindow1Command" priority="0x0100" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
-        <Icon guid="guidImages" id="bmpPicImageHealthCheck" />
-        <Strings>
-          <ButtonText>ToolWindow1</ButtonText>
-        </Strings>
-      </Button>-->
-		
-   
 
 		<Button guid="guidAI_BuddyPackageCmdSet" id="cmdidAIHealthCheckCmd" priority="0x0106" type="Button">
 			<Parent guid="guidAI_BuddyPackageCmdSet" id="AIPromptSubMenuGroup" />
