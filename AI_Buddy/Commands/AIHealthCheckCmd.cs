@@ -34,7 +34,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
 
@@ -46,7 +46,7 @@ namespace AI_Buddy.Commands
         /// <param name="commandService">Command service to add command to, not null.</param>
         private AIHealthCheckCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            this._package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -81,7 +81,7 @@ namespace AI_Buddy.Commands
         {
             get
             {
-                return this.package;
+                return this._package;
             }
         }
 
@@ -134,7 +134,7 @@ namespace AI_Buddy.Commands
                         if (!response.IsSuccessStatusCode)
                         {
                             VsShellUtilities.ShowMessageBox(
-                                                this.package,
+                                                this._package,
                                                 "AI LLM Hoster is not responding",
                                                 "Health Check Error",
                                                 OLEMSGICON.OLEMSGICON_WARNING,
@@ -143,7 +143,7 @@ namespace AI_Buddy.Commands
                         }
 
                         VsShellUtilities.ShowMessageBox(
-                                               this.package,
+                                               this._package,
                                                "AI LLM Hoster is responding.",
                                                "Health Check Success",
                                                OLEMSGICON.OLEMSGICON_INFO,
@@ -155,7 +155,7 @@ namespace AI_Buddy.Commands
             catch (Exception ex)
             {
                 VsShellUtilities.ShowMessageBox(
-                                            this.package,
+                                            this._package,
                                             ex.Message,
                                             "Health Check Error",
                                             OLEMSGICON.OLEMSGICON_WARNING,

@@ -32,7 +32,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
         private readonly EditorService _editorService;
         private readonly AIService _aiService;
         private readonly AIProperties _aiProperties;
@@ -47,7 +47,7 @@ namespace AI_Buddy.Commands
         /// <param name="commandService">Command service to add command to, not null.</param>
         private GenerateCodeFromHintCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            this._package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -85,7 +85,7 @@ namespace AI_Buddy.Commands
         {
             get
             {
-                return this.package;
+                return this._package;
             }
         }
 
@@ -114,7 +114,7 @@ namespace AI_Buddy.Commands
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-            string text = await _editorService.GetSelectedTextAsync(this.package);
+            string text = await _editorService.GetSelectedTextAsync(this._package);
 
             if (!string.IsNullOrEmpty(text))
             {
@@ -122,7 +122,7 @@ namespace AI_Buddy.Commands
                 string prompt = String.Format(PromptStrings.GenerateCodeFromHighlightedTextPrompt, _aiProperties.CodingLanguage, text);
 
                 // Initialize and show the window once before streaming
-                var promptWindow = this.package.FindToolWindow(typeof(PromptWindow), 0, true) as PromptWindow;
+                var promptWindow = this._package.FindToolWindow(typeof(PromptWindow), 0, true) as PromptWindow;
                 if (promptWindow?.Frame == null)
                 {
                     throw new NotSupportedException("Cannot create Prompt Window.");
@@ -139,6 +139,18 @@ namespace AI_Buddy.Commands
                     // Append or update the response without re-showing the window
                     promptWindow.PromptResponse = chunk;
                 });
+            }
+            else
+            {
+                VsShellUtilities.ShowMessageBox
+                   (
+                       this._package,
+                       $"No text highlighed, to generate code from hints.",
+                       "No Text Selected",
+                       OLEMSGICON.OLEMSGICON_WARNING,
+                       OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                       OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST
+                   );
             }
         }
     }

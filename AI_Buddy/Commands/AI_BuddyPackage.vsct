@@ -20,7 +20,7 @@
     <!-- Add Menu and Buttons -->
     <Menus>
 		<!-- Main Ext. menu -->
-		<Menu guid="guidAI_BuddyPackageCmdSet" id="AIPromptMenu" priority="0x0100" type="MenuController">
+		<Menu guid="guidAI_BuddyPackageCmdSet" id="AIPromptMenu" priority="0x0100" type="Menu">
 			<Parent guid="guidAI_BuddyPackageCmdSet" id="EditorMenuGroup" />
 			<Strings>
 				<ButtonText>Your AI Buddy</ButtonText>

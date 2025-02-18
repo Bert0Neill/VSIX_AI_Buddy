@@ -132,6 +132,18 @@ namespace AI_Buddy.Commands
                     promptWindow.PromptResponse = chunk; // append the response
                 });
             }
+            else
+            {
+                VsShellUtilities.ShowMessageBox
+                    (
+                        this._package,
+                        $"No code highlighed, to generate the {_aiProperties.TestFramework} test.",
+                        "No Code Selected",
+                        OLEMSGICON.OLEMSGICON_WARNING,
+                        OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST
+                    );
+            }
         }
     }
 }

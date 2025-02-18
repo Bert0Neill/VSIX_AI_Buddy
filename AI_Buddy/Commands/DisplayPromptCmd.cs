@@ -28,7 +28,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisplayPromptCmd"/> class.
@@ -38,7 +38,7 @@ namespace AI_Buddy.Commands
         /// <param name="commandService">Command service to add command to, not null.</param>
         private DisplayPromptCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            this._package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -62,7 +62,7 @@ namespace AI_Buddy.Commands
         {
             get
             {
-                return this.package;
+                return this._package;
             }
         }
 
@@ -91,7 +91,7 @@ namespace AI_Buddy.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            ToolWindowPane window = this.package.FindToolWindow(typeof(PromptWindow), 0, true);
+            ToolWindowPane window = this._package.FindToolWindow(typeof(PromptWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
                 throw new NotSupportedException("Cannot create tool window");

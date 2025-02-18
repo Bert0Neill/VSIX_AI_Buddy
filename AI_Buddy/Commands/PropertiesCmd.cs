@@ -30,7 +30,7 @@ namespace AI_Buddy.Commands
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly AsyncPackage package;
+        private readonly AsyncPackage _package;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertiesCmd"/> class.
@@ -40,7 +40,7 @@ namespace AI_Buddy.Commands
         /// <param name="commandService">Command service to add command to, not null.</param>
         private PropertiesCmd(AsyncPackage package, OleMenuCommandService commandService)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
+            this._package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -64,7 +64,7 @@ namespace AI_Buddy.Commands
         {
             get
             {
-                return this.package;
+                return this._package;
             }
         }
 

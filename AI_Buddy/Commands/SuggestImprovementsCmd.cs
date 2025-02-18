@@ -137,6 +137,18 @@ private readonly EditorService _editorService;
                     promptWindow.PromptResponse = chunk;
                 });
             }
+            else
+            {
+                VsShellUtilities.ShowMessageBox
+                   (
+                       this.package,
+                       $"No code highlighed, to suggest improvements.",
+                       "No Code Selected",
+                       OLEMSGICON.OLEMSGICON_WARNING,
+                       OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                       OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST
+                   );
+            }
         }
     }
 }
