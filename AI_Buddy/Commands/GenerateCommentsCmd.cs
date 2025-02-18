@@ -33,10 +33,12 @@ namespace AI_Buddy.Commands
         /// VS Package that provides this command, not null.
         /// </summary>
         private readonly AsyncPackage package;
-private readonly EditorService _editorService;
+        private readonly EditorService _editorService;
         private readonly AIService _aiService;
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
+        private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateCommentsCmd"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
@@ -52,10 +54,11 @@ private readonly EditorService _editorService;
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
 
- _editorService = new EditorService();
+            _editorService = new EditorService();
             _aiService = new AIService();
             _aiProperties = new AIProperties();
             _fileService = new FileService();
+            _richTextBoxParagraphGenerator = new RichTextBoxParagraphGenerator();
 
             // read file settings
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
@@ -125,7 +128,7 @@ private readonly EditorService _editorService;
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                promptWindow.PromptResponse = $"{Environment.NewLine}Generating {_aiProperties.TestFramework} prompt for your code: {Environment.NewLine} {text} {Environment.NewLine}"; // update window panel control
+                promptWindow.FormattedPrompt = _richTextBoxParagraphGenerator.GenerateCommentsFromCodeParagraph(prompt, text, _aiProperties); // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;
                 Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());

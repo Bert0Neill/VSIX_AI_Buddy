@@ -63,9 +63,9 @@ namespace AI_Buddy.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Write a method in {0}, using the following text: {1}.
         /// </summary>
-        internal static string FnxFromHighlightedTextPrompt {
+        internal static string GenerateCodeFromHighlightedTextPrompt {
             get {
-                return ResourceManager.GetString("FnxFromHighlightedTextPrompt", resourceCulture);
+                return ResourceManager.GetString("GenerateCodeFromHighlightedTextPrompt", resourceCulture);
             }
         }
         

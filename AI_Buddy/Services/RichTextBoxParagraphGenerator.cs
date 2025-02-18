@@ -39,7 +39,7 @@ namespace AI_Buddy.Services
             return promptDetails;
         }
 
-        public Paragraph GenerateCommentsFromCodeParagraph(string prompt, string code, AIProperties aiProperties, bool isRtbEmpty = false)
+        public Paragraph[] GenerateCommentsFromCodeParagraph(string prompt, string code, AIProperties aiProperties, bool isRtbEmpty = false)
         {
             Paragraph paragraph = new Paragraph();
 
@@ -49,7 +49,7 @@ namespace AI_Buddy.Services
                 Foreground = System.Windows.Media.Brushes.Black,
             };
 
-            Run promptDescription = new Run($"Generating a Unit Test ({aiProperties.TestFramework}) in {aiProperties.CodingLanguage} for your code: {Environment.NewLine}")
+            Run promptDescription = new Run($"Generating comments for your code: {Environment.NewLine}")
             {
                 Foreground = System.Windows.Media.Brushes.Blue
             };
@@ -66,11 +66,12 @@ namespace AI_Buddy.Services
                 FontStyle = System.Windows.FontStyles.Italic
             };
             paragraph.Inlines.Add(promptCode);
+            promptDetails[1] = paragraph;
 
-            return paragraph;
+            return promptDetails;
         }
 
-        public Paragraph GenerateCodeFromHintParagraph(string prompt, string code, AIProperties aiProperties, bool isRtbEmpty = false)
+        public Paragraph[] GenerateCodeFromHintParagraph(string prompt, string hints, AIProperties aiProperties, bool isRtbEmpty = false)
         {
             Paragraph paragraph = new Paragraph();
 
@@ -80,7 +81,7 @@ namespace AI_Buddy.Services
                 Foreground = System.Windows.Media.Brushes.Black,
             };
 
-            Run promptDescription = new Run($"Generating a Unit Test ({aiProperties.TestFramework}) in {aiProperties.CodingLanguage} for your code: {Environment.NewLine}")
+            Run promptDescription = new Run($"Generating {aiProperties.CodingLanguage} code based on your suggestions: {Environment.NewLine}")
             {
                 Foreground = System.Windows.Media.Brushes.Blue
             };
@@ -91,14 +92,15 @@ namespace AI_Buddy.Services
 
             // create a Run for the code (blue & italic)
             paragraph = new Paragraph();
-            Run promptCode = new Run($"{code} {Environment.NewLine + Environment.NewLine}")
+            Run promptCode = new Run($"{hints} {Environment.NewLine + Environment.NewLine}")
             {
                 Foreground = System.Windows.Media.Brushes.Black,
                 FontStyle = System.Windows.FontStyles.Italic
             };
             paragraph.Inlines.Add(promptCode);
+            promptDetails[1] = paragraph;
 
-            return paragraph;
+            return promptDetails;
         }
 
         public Paragraph GenerateSubmitPromptParagraph(string prompt, bool isRtbEmpty = false)
