@@ -7,8 +7,6 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.IO;
-using System.Windows.Documents;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 using Task = System.Threading.Tasks.Task;
 
 namespace AI_Buddy.Commands
@@ -38,9 +36,6 @@ namespace AI_Buddy.Commands
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
         private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
-
-        //private IVsMonitorSelection _selectionMonitor;
-        //private uint _selectionCookie;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenerateUnitTestCmd"/> class.
@@ -80,7 +75,6 @@ namespace AI_Buddy.Commands
             ThreadHelper.ThrowIfNotOnUIThread();
             var command = sender as OleMenuCommand;
             command.Enabled = _editorService.GetSelectedTextAsync(this._package).Result != string.Empty;
-            //command.Visible = _editorService.GetSelectedTextAsync(this._package).Result != string.Empty;
         }
 
         /// <summary>
