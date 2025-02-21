@@ -30,6 +30,8 @@ namespace AI_Buddy.Components
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
         private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
+        private bool _isImagesAttached = false;
+        private List<string> _imageFilename = new List<string>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptWindowControl"/> class.
@@ -50,7 +52,7 @@ namespace AI_Buddy.Components
             {
                 _aiProperties = _fileService.LoadFromJson<AIProperties>(filePath);
             }
-
+            
             rtbResults.Document.Blocks.Clear();
         }
 
@@ -98,6 +100,9 @@ namespace AI_Buddy.Components
             try
             {
                 Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+
+                _isImagesAttached = false;
+                _imageFilename = new List<string>();
 
                 var prompt = ExtractRichTextBoxContent();
 
@@ -175,7 +180,7 @@ namespace AI_Buddy.Components
             using (HttpClient client = new HttpClient())
             {
                 var requestBody = new
-                { 
+                {
                     model = _aiProperties.PromptLLMName,
                     prompt = prompt,
                     stream = _aiProperties.IsPromptResponseStreaming // Enable streaming response
@@ -217,7 +222,111 @@ namespace AI_Buddy.Components
                 }
             }
         }
-       
+
+        //private async Task GetOllamaResponseStreamAsync(string prompt, Action<string> onResponseChunk)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        using (var formData = new MultipartFormDataContent())
+        //        {
+        //            // Add the image file
+        //            string imagePath = "C:\\Users\\ONeillB\\source\\repos\\TestConsole\\ExtractedImage_1.jpeg";
+        //            var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+        //            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png"); // Change based on file type
+        //            formData.Add(fileContent, "image", Path.GetFileName(imagePath)); // 'image' should match API's expected field name
+
+        //            // Add JSON data (optional)
+        //            var jsonPayload = new
+        //            {
+        //                model = _aiProperties.PromptLLMName,
+        //                prompt = prompt,
+        //                stream = _aiProperties.IsPromptResponseStreaming
+        //            };
+        //            string jsonString = JsonConvert.SerializeObject(jsonPayload);
+        //            var jsonStringContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
+        //            formData.Add(jsonStringContent, "json_payload"); // Change field name if required
+
+        //            // Set API key in headers
+        //            client.DefaultRequestHeaders.Clear();
+        //            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_aiProperties.AIPromptKey}");
+
+        //            // Make the request
+        //            var response = await client.PostAsync(_aiProperties.AIPromptURL, formData);
+
+        //            // Handle response
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                string responseData = await response.Content.ReadAsStringAsync();
+        //                Console.WriteLine("Response: " + responseData);
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("Error: " + response.StatusCode);
+        //            }
+        //        }
+        //    }
+
+        //    //using (HttpClient client = new HttpClient())
+        //    //{
+        //    //    var requestBody = new
+        //    //    {
+        //    //        model = _aiProperties.PromptLLMName,
+        //    //        prompt = prompt,
+        //    //        stream = _aiProperties.IsPromptResponseStreaming // Enable streaming response
+        //    //    };
+
+        //    //    var formData = new MultipartFormDataContent();
+        //    //    string jsonContent = JsonConvert.SerializeObject(requestBody);
+        //    //    var jsonStringContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+        //    //    formData.Add(jsonStringContent, "json_payload"); // Use correct field name if needed
+
+
+        //    //    // Attach images if available
+        //    //    if (_isImagesAttached)
+        //    //    {
+        //    //        foreach (var imagePath in _imageFilename)
+        //    //        {
+        //    //            var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+        //    //            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg"); // Adjust as needed
+        //    //            formData.Add(fileContent, "image", Path.GetFileName(imagePath)); // 'image' is the form field name
+        //    //        }
+        //    //    }
+
+        //    //    // Set API key in headers
+        //    //    client.DefaultRequestHeaders.Clear();
+        //    //    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_aiProperties.AIPromptKey}");
+
+        //    //    using (var request = new HttpRequestMessage(HttpMethod.Post, _aiProperties.AIPromptURL) { Content = formData })
+        //    //    using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+        //    //    {
+        //    //        if (!response.IsSuccessStatusCode)
+        //    //        {
+        //    //            onResponseChunk($"Error: {response.StatusCode}");
+        //    //            return;
+        //    //        }
+
+        //    //        using (var stream = await response.Content.ReadAsStreamAsync())
+        //    //        using (var reader = new StreamReader(stream))
+        //    //        {
+        //    //            while (!reader.EndOfStream)
+        //    //            {
+        //    //                var line = await reader.ReadLineAsync();
+        //    //                if (!string.IsNullOrWhiteSpace(line))
+        //    //                {
+        //    //                    var jsonResponse = JsonConvert.DeserializeObject<AIHosterResponse>(line);
+        //    //                    jsonResponse.response = Regex.Replace(jsonResponse.response, @"<\/?think>", "") // Remove DeepSeek's <think> elements
+        //    //                        .TrimStart('\n', '\r')
+        //    //                        .TrimStart();
+
+        //    //                    onResponseChunk(jsonResponse.response);
+        //    //                }
+        //    //            }
+        //    //        }
+        //    //    }
+        //    //}
+        //}
+
+
         private string ExtractRichTextBoxContent()
         {
             StringBuilder extractedText = new StringBuilder();
@@ -240,17 +349,28 @@ namespace AI_Buddy.Components
                             BitmapSource bitmapSource = image.Source as BitmapSource;
                             if (bitmapSource != null)
                             {
-                                //images.Add(bitmap);
+                                _isImagesAttached = true;
+                                images.Add(bitmapSource);
                                 extractedText.Append(" (Image attached) "); // Placeholder for image in text
 
+                                // attach to results pane - just for show!
                                 BitmapSource resizedBitmapSource = ResizeBitmapSource(bitmapSource, 100, 100);
                                 Clipboard.SetImage(resizedBitmapSource);
-
                                 rtbResults.Paste(); // Paste the image into the second RichTextBox
                             }
                         }
                     }
                 }
+            }
+
+            // Process extracted images
+            int count = 1;
+            foreach (var img in images)
+            {
+                _imageFilename.Add($"ExtractedImage_{count}.jpeg");
+
+                SaveImage(img, $"ExtractedImage_{count}.jpeg");
+                count++;
             }
 
             // Display extracted text
@@ -315,6 +435,46 @@ namespace AI_Buddy.Components
             rtbResults.Focus(); // Optional: Ensures UI refresh
         }
 
+        private void SaveImage(BitmapSource image, string filePath)
+        {
+            using (FileStream stream = new FileStream(filePath, FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                encoder.Save(stream);
+            }
+        }
+
+        private BitmapSource LoadImage(string filePath)
+        {
+            using (FileStream stream = new FileStream(filePath, FileMode.Open))
+            {
+                PngBitmapDecoder decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+                BitmapSource bitmapSource = decoder.Frames[0]; // Assuming the file has only one frame
+                return bitmapSource;
+            }
+        }
+
+        private void DeleteAllImages(string folderPath)
+        {
+            if (Directory.Exists(folderPath))
+            {
+                foreach (string file in Directory.GetFiles(folderPath, "*.jpeg")) // You can filter by "*.png" or "*.jpg"
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error deleting file {file}: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+
+
         private BitmapSource ResizeBitmapSource(BitmapSource source, double widthPercentage, double heightPercentage)
         {
             double newWidth = source.PixelWidth * (widthPercentage / 100.0);
@@ -323,5 +483,59 @@ namespace AI_Buddy.Components
             TransformedBitmap transformedBitmap = new TransformedBitmap(source, new ScaleTransform(widthPercentage / 100.0, heightPercentage / 100.0));
             return transformedBitmap;
         }
+
+        public static async Task CallDeepSeekWithImageAsync(string apiEndpoint, string apiKey, string imagePath)
+        {
+             HttpClient client = new HttpClient();
+
+            // Prepare the HttpContent for the image file
+            var formData = new MultipartFormDataContent();
+
+            // Open the image file and add it to the form data
+            var fileContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+            fileContent.Headers.Add("Content-Type", "image/jpeg"); // or image/png based on the image type
+            formData.Add(fileContent, "image", Path.GetFileName(imagePath)); // 'image' is the form field name for the image
+
+            // Add any required headers, e.g., for authorization
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+
+            try
+            {
+                // Send the POST request with the image
+                var response = await client.PostAsync(apiEndpoint, formData);
+
+                // Ensure we get a successful response
+                response.EnsureSuccessStatusCode();
+
+                // Read and process the response
+                string responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Response: " + responseContent);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        private ByteArrayContent ConvertBitmapSourceToByteArrayContent(BitmapSource bitmapSource)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                // Use an encoder based on the image type (e.g., PNG, JPG)
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+                encoder.Save(memoryStream);
+
+                // Get the byte array from the memory stream
+                byte[] byteArray = memoryStream.ToArray();
+
+                // Return the byte array as ByteArrayContent
+                return new ByteArrayContent(byteArray);
+            }
+        }
+
+
+
     }
 }
