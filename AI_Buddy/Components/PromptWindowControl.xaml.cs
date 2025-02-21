@@ -4,6 +4,7 @@ using HTMLConverter;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 
@@ -235,11 +237,16 @@ namespace AI_Buddy.Components
                         else if (inline is InlineUIContainer container && container.Child is System.Windows.Controls.Image image)
                         {
                             // Extract image
-                            BitmapSource bitmap = image.Source as BitmapSource;
-                            if (bitmap != null)
+                            BitmapSource bitmapSource = image.Source as BitmapSource;
+                            if (bitmapSource != null)
                             {
-                                images.Add(bitmap);
-                                extractedText.Append("[Image]"); // Placeholder for image in text
+                                //images.Add(bitmap);
+                                extractedText.Append(" (Image attached) "); // Placeholder for image in text
+
+                                BitmapSource resizedBitmapSource = ResizeBitmapSource(bitmapSource, 100, 100);
+                                Clipboard.SetImage(resizedBitmapSource);
+
+                                rtbResults.Paste(); // Paste the image into the second RichTextBox
                             }
                         }
                     }
@@ -249,25 +256,7 @@ namespace AI_Buddy.Components
             // Display extracted text
             string plainText = extractedText.ToString();
 
-            // Process extracted images
-            int count = 1;
-            foreach (var img in images)
-            {
-                SaveImage(img, $"ExtractedImage_{count}.png");
-                count++;
-            }
-
             return plainText;
-        }
-
-        private void SaveImage(BitmapSource image, string filePath)
-        {
-            using (FileStream stream = new FileStream(filePath, FileMode.Create))
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                encoder.Save(stream);
-            }
         }
 
         private void rtbPrompt_Loaded(object sender, RoutedEventArgs e)
@@ -313,25 +302,10 @@ namespace AI_Buddy.Components
             AppendResult(value);
         }
 
-        private FlowDocument HtmlToFlowDocument(string html)
-        {
-            // Convert HTML to XAML (you need to include the HtmlToXamlConverter helper)
-            string xaml = HtmlToXamlConverter.ConvertHtmlToXaml(html, true);
-
-            // Load FlowDocument from XAML
-            using (StringReader stringReader = new StringReader(xaml))
-            using (XmlReader xmlReader = XmlReader.Create(stringReader))
-            {
-                return XamlReader.Load(xmlReader) as FlowDocument;
-            }
-        }
-
         internal void UpdateResultPrompt(Paragraph[] value)
         {
             foreach (var item in value)
             {
-                //Paragraph paragraph = new Paragraph();
-                //paragraph.Inlines.Add(item);
                 this.rtbResults.Document.Blocks.Add(item);
             }
 
@@ -339,6 +313,15 @@ namespace AI_Buddy.Components
             rtbResults.CaretPosition = rtbResults.Document.ContentEnd;
             rtbResults.ScrollToEnd();
             rtbResults.Focus(); // Optional: Ensures UI refresh
+        }
+
+        private BitmapSource ResizeBitmapSource(BitmapSource source, double widthPercentage, double heightPercentage)
+        {
+            double newWidth = source.PixelWidth * (widthPercentage / 100.0);
+            double newHeight = source.PixelHeight * (heightPercentage / 100.0);
+
+            TransformedBitmap transformedBitmap = new TransformedBitmap(source, new ScaleTransform(widthPercentage / 100.0, heightPercentage / 100.0));
+            return transformedBitmap;
         }
     }
 }

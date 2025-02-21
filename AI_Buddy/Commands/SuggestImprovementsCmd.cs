@@ -37,6 +37,8 @@ private readonly EditorService _editorService;
         private readonly AIService _aiService;
         private readonly AIProperties _aiProperties;
         private readonly FileService _fileService;
+        private readonly RichTextBoxParagraphGenerator _richTextBoxParagraphGenerator;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SuggestImprovementsCmd"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
@@ -56,6 +58,7 @@ private readonly EditorService _editorService;
             _aiService = new AIService();
             _aiProperties = new AIProperties();
             _fileService = new FileService();
+            _richTextBoxParagraphGenerator = new RichTextBoxParagraphGenerator();
 
             // read file settings
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), _aiProperties.SettingsFilename);
@@ -116,7 +119,7 @@ private readonly EditorService _editorService;
             if (!string.IsNullOrEmpty(text))
             {
                 // generate unit test for prompt
-                string prompt = String.Format(PromptStrings.SuggestCodeImprovements, _aiProperties.CodingLanguage, text);
+                string prompt = String.Format(PromptStrings.SuggestCodeImprovements, text);
 
                 // Initialize and show the window once before streaming
                 var promptWindow = this.package.FindToolWindow(typeof(PromptWindow), 0, true) as PromptWindow;
@@ -125,7 +128,9 @@ private readonly EditorService _editorService;
                     throw new NotSupportedException("Cannot create Prompt Window.");
                 }
 
-                promptWindow.PromptResponse = $"{Environment.NewLine}Generating {_aiProperties.TestFramework} prompt for your code: {Environment.NewLine} {text} {Environment.NewLine}"; // update window panel control
+                promptWindow.FormattedPrompt = _richTextBoxParagraphGenerator.SuggestCodeImprovements(prompt, text, _aiProperties); // update window panel control
+
+                //promptWindow.PromptResponse = $"{Environment.NewLine}Generating {_aiProperties.TestFramework} prompt for your code: {Environment.NewLine} {text} {Environment.NewLine}"; // update window panel control
 
                 var windowFrame = (IVsWindowFrame)promptWindow.Frame;
                 Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());

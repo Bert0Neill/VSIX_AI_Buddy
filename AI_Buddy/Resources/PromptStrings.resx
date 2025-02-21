@@ -121,7 +121,7 @@
     <value>Write a method in {0}, using the following text: {1}</value>
   </data>
   <data name="SuggestCodeImprovements" xml:space="preserve">
-    <value>How can this {0} code be improved: {1}</value>
+    <value>How can this code be improved: {0}</value>
   </data>
   <data name="SuggestCommentsForCode" xml:space="preserve">
     <value>Comment the following {0} code: {1}</value>

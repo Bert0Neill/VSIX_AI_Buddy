@@ -132,5 +132,37 @@ namespace AI_Buddy.Services
             TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
             return string.IsNullOrWhiteSpace(textRange.Text);
         }
+
+        internal Paragraph[] SuggestCodeImprovements(string prompt, string code, AIProperties aiProperties, bool isRtbEmpty = false)
+        {
+            Paragraph paragraph = new Paragraph();
+
+            var promptDetails = new Paragraph[2];
+            Run promptLabel = new Run($"{(!isRtbEmpty ? Environment.NewLine : string.Empty)} Prompt: ")
+            {
+                Foreground = System.Windows.Media.Brushes.Black,
+            };
+
+            Run promptDescription = new Run($"Generating coding imrpovements for your highlighted code: {Environment.NewLine}")
+            {
+                Foreground = System.Windows.Media.Brushes.Blue
+            };
+            paragraph.Inlines.Add(promptLabel);
+            paragraph.Inlines.Add(promptDescription);
+
+            promptDetails[0] = paragraph;
+
+            // create a Run for the code (blue & italic)
+            paragraph = new Paragraph();
+            Run promptCode = new Run($"{code} {Environment.NewLine + Environment.NewLine}")
+            {
+                Foreground = System.Windows.Media.Brushes.Black,
+                FontStyle = System.Windows.FontStyles.Italic
+            };
+            paragraph.Inlines.Add(promptCode);
+            promptDetails[1] = paragraph;
+
+            return promptDetails;
+        }
     }
 }

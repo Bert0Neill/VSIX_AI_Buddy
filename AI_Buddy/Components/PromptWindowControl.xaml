@@ -50,46 +50,46 @@
             </ScrollViewer>
 
             <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,1,0,0">
-                <Border CornerRadius="8" Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
-            BorderThickness="1" BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ActiveBorderKey}}"
-            Margin="0" Padding="2">
+                <Border CornerRadius="8" Background="Gray"
+        BorderThickness="1" BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ActiveBorderKey}}"
+        Margin="0" Padding="2">
                     <RichTextBox x:Name="rtbPrompt"
-                DataObject.Pasting="rtbPrompt_Pasting"
-                Height="80"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Stretch"
-                Background="Transparent"
-                Foreground="White"
-                primitives:TextBoxBase.CaretBrush="White"
-                AcceptsReturn="True"
-                GotFocus="rtbPrompt_GotFocus"
-                LostFocus="rtbPrompt_LostFocus"
-                Loaded="rtbPrompt_Loaded"
-                BorderThickness="0"
-                xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework">
+            DataObject.Pasting="rtbPrompt_Pasting"
+            Height="80"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            Background="Gray"
+            Foreground="Black"
+            primitives:TextBoxBase.CaretBrush="Black"
+            AcceptsReturn="True"
+            GotFocus="rtbPrompt_GotFocus"
+            LostFocus="rtbPrompt_LostFocus"
+            Loaded="rtbPrompt_Loaded"
+            BorderThickness="0"
+            xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
                             </Style>
                             <Style TargetType="{x:Type Run}">
-                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
                             </Style>
                         </RichTextBox.Resources>
                         <RichTextBox.Style>
                             <Style TargetType="RichTextBox">
-                                <Setter Property="Background" 
-                      Value="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"/>
+                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="Foreground" Value="Black"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="RichTextBox">
                                             <Border CornerRadius="8"
-                                  Background="{TemplateBinding Background}"
-                                  BorderBrush="{TemplateBinding BorderBrush}"
-                                  BorderThickness="{TemplateBinding BorderThickness}">
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
                                                 <ScrollViewer x:Name="PART_ContentHost"
-                                            Padding="{TemplateBinding Padding}"
-                                            VerticalScrollBarVisibility="Auto"/>
+                                        Padding="{TemplateBinding Padding}"
+                                        VerticalScrollBarVisibility="Auto"/>
                                             </Border>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -99,6 +99,7 @@
                     </RichTextBox>
                 </Border>
             </Grid>
+
 
             <Button x:Name="btnSubmit"
         Grid.Row="3"

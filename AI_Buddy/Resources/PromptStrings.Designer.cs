@@ -70,7 +70,7 @@ namespace AI_Buddy.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How can this {0} code be improved: {1}.
+        ///   Looks up a localized string similar to How can this code be improved: {0}.
         /// </summary>
         internal static string SuggestCodeImprovements {
             get {
