@@ -133,10 +133,16 @@
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
       <Version>9.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.SemanticKernel">
+      <Version>1.38.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.12.2069" />
     <PackageReference Include="Ollama">
       <Version>1.14.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Drawing.Common">
+      <Version>9.0.2</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http.Json">
       <Version>9.0.1</Version>
@@ -156,7 +162,10 @@
     <Content Include="Commands\Resources\Custom-Icon-Design-Pretty-Office-9-Comment-edit.16.png" />
     <Content Include="Commands\Resources\DisplayPromptCmd.png" />
     <Content Include="Commands\Resources\Double-J-Design-Origami-Colored-Pencil-Blue-document.16.png" />
-    <Content Include="Commands\Resources\Double-J-Design-Ravenna-3d-Comments.16.png" />
+    <Content Include="Commands\Resources\Double-J-Design-Ravenna-3d-Comments.16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Commands\Resources\Social-balloon-friends.16.png" />
     <Content Include="Commands\Resources\Dtafalonso-Modern-Xp-ModernXP-30-Filetype-Text.16.png" />
     <Content Include="Commands\Resources\Gartoon-Team-Gartoon-Categories-Applications-science.16.png" />
