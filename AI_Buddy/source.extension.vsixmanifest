@@ -4,7 +4,7 @@
         <Identity Id="AI_Buddy.df952552-da15-4fac-88aa-5fc5613abc3e" Version="1.0" Language="en-US" Publisher="Bert O'Neill" />
         <DisplayName>Visual Studio AI Buddy</DisplayName>
         <Description xml:space="preserve">Allow Visual Studio to connect to a local LLM host (like Ollama) that is running DeepSeek and send it prompts, without compromising your company’s codebase or inadvertently leaking sensitive intellectual property.</Description>
-        <Icon>Commands\Resources\Double-J-Design-Ravenna-3d-Comments.16.png</Icon>
+        <Icon>terminal.png</Icon>
         <Tags>AI; Visual Suduio; AI Buddy; Extension; Artificial Intelligence; </Tags>
     </Metadata>
     <Installation>

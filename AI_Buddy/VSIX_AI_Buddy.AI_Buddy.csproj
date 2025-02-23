@@ -155,6 +155,10 @@
     <Content Include="Commands\Resources\emergency_health_healthcare.png" />
     <Content Include="ReadMe\Images\EditorContextMenu.png" />
     <Content Include="ReadMe\Images\test.png" />
+    <Content Include="terminal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="ReadMe\ReadMe.md" />
     <VSCTCompile Include="Commands\AI_BuddyPackage.vsct">
       <Generator>VsctGenerator</Generator>
