@@ -103,6 +103,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="ReadMe\User Guide - AI Buddy and Hosting DeepSeek Locally.docx" />
+    <None Include="ReadMe\User Guide - Slim - AI Buddy and Hosting DeepSeek Locally.docx" />
+    <None Include="ReadMe\UserGuide.md" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
